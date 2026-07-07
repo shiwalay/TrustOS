@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "appTitle": "TrustOS",
+  "homeGreeting": "Good morning, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "trustRingLabel": "Digital Trust Index",
+  "trustRingValue": "{score} out of 1000, {band} band",
+  "@trustRingValue": {
+    "placeholders": {
+      "score": {"type": "int"},
+      "band": {"type": "String"}
+    }
+  },
+  "trustRingHint": "Double tap to see what makes up your score",
+  "referralsMyReferralsTitle": "My referrals",
+  "referralsSubmitCta": "Submit referral",
+  "referralsEmptyBody": "Referrals you submit appear here",
+  "referralsStatusPendingSync": "Pending sync",
+  "referralsStatusSubmitted": "Submitted",
+  "referralsStatusQualified": "Qualified",
+  "referralsStatusConverted": "Converted",
+  "referralsStatusSettled": "Settled",
+  "referralsStatusRejected": "Not accepted",
+  "referralsStatusExpired": "Expired",
+  "referralsConsentLabel": "The prospect knows I am referring them and agreed to be contacted",
+  "commonRetry": "Retry",
+  "commonOfflineBanner": "Offline — showing saved data"
+}

@@ -1,0 +1,21 @@
+{
+  "@@locale": "hi",
+  "appTitle": "TrustOS",
+  "homeGreeting": "सुप्रभात, {name}",
+  "trustRingLabel": "डिजिटल ट्रस्ट इंडेक्स",
+  "trustRingValue": "1000 में से {score}, {band} बैंड",
+  "trustRingHint": "अपने स्कोर की जानकारी के लिए डबल टैप करें",
+  "referralsMyReferralsTitle": "मेरे रेफ़रल",
+  "referralsSubmitCta": "रेफ़रल भेजें",
+  "referralsEmptyBody": "आपके भेजे रेफ़रल यहाँ दिखेंगे",
+  "referralsStatusPendingSync": "सिंक बाकी",
+  "referralsStatusSubmitted": "भेजा गया",
+  "referralsStatusQualified": "क्वालिफ़ाइड",
+  "referralsStatusConverted": "कन्वर्ट हुआ",
+  "referralsStatusSettled": "सेटल हुआ",
+  "referralsStatusRejected": "स्वीकृत नहीं",
+  "referralsStatusExpired": "समयसीमा समाप्त",
+  "referralsConsentLabel": "प्रॉस्पेक्ट को पता है कि मैं उन्हें रेफ़र कर रहा/रही हूँ और उन्होंने संपर्क की सहमति दी है",
+  "commonRetry": "फिर कोशिश करें",
+  "commonOfflineBanner": "ऑफ़लाइन — सहेजा गया डेटा दिख रहा है"
+}

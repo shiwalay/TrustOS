@@ -1,0 +1,15 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Generated code (recreated by build_runner / gen-l10n)
+**/*.g.dart
+lib/core/l10n/generated/
+
+# IDE
+.idea/
+*.iml
+.vscode/
