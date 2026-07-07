@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustOS — Your network is your net worth</title>
+<meta name="description" content="TrustOS is the invitation-only network where trusted referrals become verified income. AI finds the opportunities in your contacts; escrow settles the money.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1220; --navy-raised:#111B2E; --navy-line:#22304a;
+    --gold:#D4B36A; --gold-deep:#A98B45;
+    --ivory:#FAF8F4; --ivory-sunken:#F1EDE5; --ink:#16202E; --ink-2:#5A6472;
+    --mist:#A3ACBC; --paper:#F3F0E9;
+    --green:#4CC38A;
+    --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  }
+  body{font-family:var(--sans);background:var(--navy);color:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .label{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .serif{font-family:var(--serif)}
+  .btn{display:inline-block;border:0;cursor:pointer;text-decoration:none;text-align:center;
+       font-family:var(--sans);font-size:16px;font-weight:600;letter-spacing:.02em;
+       padding:15px 34px;border-radius:2px;transition:transform .15s ease,box-shadow .15s ease}
+  .btn:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(212,179,106,.25)}
+  .btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold-deep);padding:14px 30px}
+  .btn-ghost:hover{background:rgba(212,179,106,.08)}
+
+  /* ── Nav ─────────────────────────────────────── */
+  nav{position:sticky;top:0;z-index:50;background:rgba(10,18,32,.86);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--navy-line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .wordmark{font-size:13px;letter-spacing:.42em;color:var(--gold);font-weight:600;text-decoration:none}
+  nav .btn{padding:9px 20px;font-size:14px}
+
+  /* ── Hero ────────────────────────────────────── */
+  .hero{padding:96px 0 88px;border-bottom:1px solid var(--navy-line)}
+  .hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6vw,64px);
+           line-height:1.12;text-wrap:balance;color:var(--ivory)}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero .sub{margin:26px 0 34px;font-size:19px;color:var(--mist);max-width:34em}
+  .hero .sub strong{color:var(--paper)}
+  .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .marks{margin-top:38px;display:flex;gap:28px;flex-wrap:wrap;font-size:13px;color:var(--mist);letter-spacing:.04em}
+  .hero .marks span::before{content:"";display:inline-block;width:5px;height:5px;background:var(--gold);
+        border-radius:50%;margin-right:9px;vertical-align:2px}
+  .ring-wrap{display:flex;justify-content:center}
+  .ring-svg{width:min(260px,60vw);height:auto}
+  .ring-arc{stroke-dasharray:640;stroke-dashoffset:640;animation:draw 1.8s .3s cubic-bezier(.22,.8,.3,1) forwards}
+  @keyframes draw{to{stroke-dashoffset:186}}
+  .fade-up{opacity:0;transform:translateY(14px);animation:rise .7s ease forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.32s}.d4{animation-delay:.5s}
+
+  /* ── Video ───────────────────────────────────── */
+  .video-sec{padding:88px 0;border-bottom:1px solid var(--navy-line)}
+  .video-sec .head{max-width:44em;margin-bottom:36px}
+  .video-sec h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,40px);color:var(--ivory);
+                margin-top:14px;text-wrap:balance}
+  .player{position:relative;background:#060B14;border:1px solid var(--navy-line);border-radius:4px;
+          aspect-ratio:16/9;overflow:hidden;max-width:900px;margin:0 auto}
+  .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .poster{position:absolute;inset:0;display:flex;flex-direction:column;gap:18px;align-items:center;
+          justify-content:center;background:radial-gradient(ellipse at 50% 40%,#122036 0%,#060B14 70%);
+          cursor:pointer;border:0;color:var(--paper);font-family:var(--sans);z-index:3}
+  .playbtn{width:76px;height:76px;border-radius:50%;border:1.5px solid var(--gold);
+           display:flex;align-items:center;justify-content:center;background:rgba(212,179,106,.12);
+           transition:transform .2s ease}
+  .poster:hover .playbtn{transform:scale(1.07)}
+  .playbtn svg{margin-left:5px}
+  .poster small{color:var(--mist);font-size:14px;letter-spacing:.06em}
+  .chrome{position:absolute;left:0;right:0;bottom:0;padding:14px 18px;display:none;z-index:2;
+          background:linear-gradient(transparent,rgba(6,11,20,.9));align-items:center;gap:14px}
+  .chrome button{background:none;border:0;color:var(--gold);cursor:pointer;padding:4px;display:flex}
+  .bar{flex:1;height:3px;background:var(--navy-raised);border-radius:2px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--gold)}
+  .tstamp{font-size:12px;color:var(--mist);font-variant-numeric:tabular-nums}
+  .caption{position:absolute;left:0;right:0;bottom:52px;text-align:center;padding:0 8%;z-index:2;
+           font-size:clamp(14px,2vw,19px);line-height:1.55;color:var(--ivory);text-shadow:0 1px 8px rgba(0,0,0,.5)}
+  .scene{position:absolute;inset:0 0 90px;display:none;align-items:center;justify-content:center;
+         flex-direction:column;gap:18px;padding:24px}
+  .scene.on{display:flex}
+  .endcta{position:absolute;inset:0;display:none;flex-direction:column;gap:20px;align-items:center;
+          justify-content:center;background:rgba(6,11,20,.88);z-index:4;text-align:center;padding:24px}
+  .endcta h3{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3vw,32px);color:var(--ivory)}
+  .replay{background:none;border:0;color:var(--mist);cursor:pointer;font-size:14px;font-family:var(--sans)}
+  .replay:hover{color:var(--gold)}
+  .scoreXL{font-family:var(--sans);font-weight:600;font-size:clamp(48px,8vw,84px);color:var(--gold);
+           font-variant-numeric:tabular-nums;line-height:1}
+  .factor{display:flex;align-items:center;gap:14px;width:min(420px,80%)}
+  .factor span{width:150px;font-size:13px;color:var(--mist);text-align:right}
+  .factor .fbar{flex:1;height:6px;background:var(--navy-raised);border-radius:3px;overflow:hidden}
+  .factor .fbar i{display:block;height:100%;width:0;background:var(--gold);transition:width .9s cubic-bezier(.22,.8,.3,1)}
+  .opp{display:flex;align-items:center;gap:16px}
+  .opp .av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+           border:1px solid var(--gold-deep);color:var(--gold);background:rgba(212,179,106,.1);
+           font-weight:600;opacity:0;transform:scale(.7);transition:all .5s ease}
+  .opp .lnk{width:90px;height:2px;background:var(--navy-raised);position:relative;overflow:hidden}
+  .opp .lnk i{position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .8s ease}
+  .settled{opacity:0;transition:opacity .6s ease;text-align:center}
+  .settled .amt{color:var(--green);font-weight:600;font-size:22px;font-variant-numeric:tabular-nums}
+  .settled small{color:var(--mist)}
+  .lockrow{opacity:0;transition:opacity .5s ease;display:flex;gap:10px;align-items:center;color:var(--ivory);font-size:15px}
+  .lockrow svg{flex:none}
+
+  /* ── Ledger (how you earn) ───────────────────── */
+  .ledger-sec{background:var(--ivory);color:var(--ink);padding:92px 0;border-bottom:1px solid #e4ddcf}
+  .ledger-sec .label{color:var(--gold-deep)}
+  .ledger-sec h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,40px);margin-top:14px;
+                 text-wrap:balance;max-width:20em}
+  .ledger-sec .lede{color:var(--ink-2);max-width:38em;margin-top:16px;font-size:17px}
+  .steps{margin-top:52px;border-top:1px solid #d8d0bf}
+  .step{display:grid;grid-template-columns:64px 1.1fr 1fr;gap:24px;padding:26px 0;border-bottom:1px solid #d8d0bf;align-items:baseline}
+  .step .no{font-family:var(--serif);font-size:28px;color:var(--gold-deep);font-variant-numeric:tabular-nums}
+  .step h3{font-size:19px;font-weight:600;margin-bottom:6px}
+  .step p{color:var(--ink-2);font-size:15px;max-width:30em}
+  .entry{font-variant-numeric:tabular-nums;font-size:15px;display:flex;flex-direction:column;gap:6px}
+  .entry .row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dotted #cfc6b2;padding-bottom:4px}
+  .entry .row b{font-weight:600}
+  .stamp{display:inline-block;font-size:11px;letter-spacing:.18em;color:var(--green);
+         border:1px solid var(--green);padding:2px 8px;border-radius:2px;font-weight:600}
+  .stamp.hold{color:var(--gold-deep);border-color:var(--gold-deep)}
+  .models{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .model{background:#fff;border:1px solid #e4ddcf;border-radius:3px;padding:26px}
+  .model .mt{font-size:13px;letter-spacing:.2em;color:var(--gold-deep);font-weight:600;text-transform:uppercase}
+  .model .mv{font-family:var(--serif);font-size:30px;margin:10px 0 6px;font-variant-numeric:tabular-nums}
+  .model p{font-size:14px;color:var(--ink-2)}
+  .compound{margin-top:44px;padding:26px 30px;background:var(--ivory-sunken);border-left:2px solid var(--gold-deep);
+            max-width:46em;font-size:16px}
+  .compound b{font-weight:600}
+  .foot-note{margin-top:26px;font-size:12.5px;color:var(--ink-2)}
+
+  /* ── Difference ─────────────────────────────── */
+  .diff-sec{padding:92px 0;border-bottom:1px solid var(--navy-line)}
+  .diff-sec h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,40px);color:var(--ivory);
+               margin-top:14px;text-wrap:balance}
+  .diffs{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--navy-line);
+         border:1px solid var(--navy-line)}
+  .diff{background:var(--navy);padding:30px 26px}
+  .diff .vs{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
+  .diff h3{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--gold);margin:10px 0 10px}
+  .diff p{font-size:14.5px;color:var(--mist)}
+  .privacy{margin-top:64px;display:flex;gap:28px;flex-wrap:wrap;justify-content:center;
+           font-size:14px;color:var(--mist);border-top:1px solid var(--navy-line);padding-top:34px}
+  .privacy span::before{content:"✓";color:var(--green);margin-right:8px}
+
+  /* ── Join ───────────────────────────────────── */
+  .join{padding:100px 0 90px;text-align:center}
+  .join h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.6vw,46px);color:var(--ivory);
+           text-wrap:balance;max-width:18em;margin:18px auto 0}
+  .join .lede{color:var(--mist);max-width:36em;margin:18px auto 36px;font-size:17px}
+  .join form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .join input{font-family:var(--sans);font-size:16px;padding:14px 18px;width:min(320px,80vw);
+              background:var(--navy-raised);border:1px solid var(--navy-line);border-radius:2px;color:var(--ivory)}
+  .join input::placeholder{color:var(--mist)}
+  .join .ok{display:none;margin-top:18px;color:var(--green);font-size:15px}
+  .join .alt{margin-top:22px;font-size:14px;color:var(--mist)}
+  .join .alt a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-deep)}
+  footer{border-top:1px solid var(--navy-line);padding:30px 0 40px;font-size:13px;color:var(--mist)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:820px){
+    .hero .wrap{grid-template-columns:1fr;gap:40px}
+    .ring-wrap{order:-1}
+    .models,.diffs{grid-template-columns:1fr}
+    .step{grid-template-columns:44px 1fr;grid-template-rows:auto auto}
+    .step .entry{grid-column:2}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="wordmark" href="#top">T R U S T O S</a>
+    <a class="btn btn-gold" href="#join">Request an invitation</a>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────── -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="label fade-up d1">Invitation-only · AI relationship intelligence</p>
+      <h1 class="fade-up d2">Your network is<br><em>your net worth.</em></h1>
+      <p class="sub fade-up d3">The people you already know are worth real money — you've just never had
+        the machinery to prove it. TrustOS turns trusted introductions into
+        <strong>verified, escrow-settled referral income</strong>, and your reputation into a score
+        that opens doors.</p>
+      <div class="ctas fade-up d4">
+        <a class="btn btn-gold" href="#join">Request an invitation</a>
+        <a class="btn btn-ghost" href="#video">Watch how it works · 30s</a>
+      </div>
+      <p class="marks fade-up d4">
+        <span>Every member vouched for</span>
+        <span>Payouts through escrow</span>
+        <span>Only verified outcomes count</span>
+      </p>
+    </div>
+    <div class="ring-wrap fade-up d3" aria-hidden="true">
+      <svg class="ring-svg" viewBox="0 0 240 240" fill="none">
+        <circle cx="120" cy="120" r="102" stroke="#22304a" stroke-width="14"/>
+        <circle class="ring-arc" cx="120" cy="120" r="102" stroke="#D4B36A" stroke-width="14"
+                stroke-linecap="round" transform="rotate(-90 120 120)"/>
+        <text x="120" y="118" text-anchor="middle" fill="#F3F0E9"
+              font-family="-apple-system,Segoe UI,Roboto,sans-serif" font-size="46" font-weight="600">712</text>
+        <text x="120" y="148" text-anchor="middle" fill="#D4B36A"
+              font-family="-apple-system,Segoe UI,Roboto,sans-serif" font-size="15" letter-spacing="4">GOLD</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ── VIDEO ────────────────────────────────────── -->
+<section class="video-sec" id="video">
+  <div class="wrap">
+    <div class="head">
+      <p class="label">The 30-second version</p>
+      <h2>Watch what happens between “I know someone” and money in your account.</h2>
+    </div>
+
+    <div class="player" id="player">
+      <button class="poster" id="poster" aria-label="Play: how TrustOS works, 30 seconds">
+        <span class="playbtn">
+          <svg width="26" height="30" viewBox="0 0 26 30" fill="#D4B36A"><path d="M0 0 L26 15 L0 30 Z"/></svg>
+        </span>
+        <small>HOW TRUSTOS WORKS · 0:30</small>
+      </button>
+
+      <!-- Scene 1: brand -->
+      <div class="scene" data-scene="0">
+        <p class="label" style="letter-spacing:.42em">T R U S T O S</p>
+        <svg width="150" height="150" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+          <circle cx="120" cy="120" r="102" stroke="#22304a" stroke-width="14"/>
+          <circle id="vRing" cx="120" cy="120" r="102" stroke="#D4B36A" stroke-width="14"
+                  stroke-linecap="round" transform="rotate(-90 120 120)"
+                  stroke-dasharray="640" stroke-dashoffset="640"/>
+          <text x="120" y="118" text-anchor="middle" fill="#F3F0E9" font-size="46" font-weight="600"
+                font-family="-apple-system,Segoe UI,Roboto,sans-serif">712</text>
+          <text x="120" y="148" text-anchor="middle" fill="#D4B36A" font-size="15" letter-spacing="4"
+                font-family="-apple-system,Segoe UI,Roboto,sans-serif">GOLD</text>
+        </svg>
+        <p class="serif" style="font-size:clamp(20px,3vw,30px);color:var(--ivory)">Your network is your net worth.</p>
+      </div>
+
+      <!-- Scene 2: graph -->
+      <div class="scene" data-scene="1">
+        <canvas id="graph" width="560" height="360" style="max-width:88%;height:auto"></canvas>
+      </div>
+
+      <!-- Scene 3: trust -->
+      <div class="scene" data-scene="2">
+        <div class="scoreXL" id="score">0</div>
+        <p class="label" style="font-size:11px">Digital Trust Index</p>
+        <div class="factor"><span>Referrals settled</span><div class="fbar"><i data-w="76"></i></div></div>
+        <div class="factor"><span>Identity verified</span><div class="fbar"><i data-w="79"></i></div></div>
+        <div class="factor"><span>Kept meetings</span><div class="fbar"><i data-w="70"></i></div></div>
+      </div>
+
+      <!-- Scene 4: opportunity -->
+      <div class="scene" data-scene="3">
+        <div class="opp">
+          <div class="av">You</div>
+          <div class="lnk"><i></i></div>
+          <div class="av">DR</div>
+        </div>
+        <div class="settled">
+          <div class="amt">₹500 commission settled</div>
+          <small>escrow released · verified in the ledger · trust +6</small>
+        </div>
+      </div>
+
+      <!-- Scene 5: privacy -->
+      <div class="scene" data-scene="4">
+        <svg width="44" height="54" viewBox="0 0 44 54" fill="none" aria-hidden="true">
+          <rect x="2" y="22" width="40" height="30" rx="3" stroke="#D4B36A" stroke-width="2.5"/>
+          <path d="M10 22 v-6 a12 12 0 0 1 24 0 v6" stroke="#D4B36A" stroke-width="2.5"/>
+          <circle cx="22" cy="37" r="3.5" fill="#D4B36A"/>
+        </svg>
+        <div class="lockrow"><svg width="15" height="12" viewBox="0 0 15 12"><path d="M1 6 l4 4 L14 1" stroke="#4CC38A" stroke-width="2" fill="none"/></svg>Contacts stay on your side of the wall</div>
+        <div class="lockrow"><svg width="15" height="12" viewBox="0 0 15 12"><path d="M1 6 l4 4 L14 1" stroke="#4CC38A" stroke-width="2" fill="none"/></svg>Nobody is messaged without you</div>
+        <div class="lockrow"><svg width="15" height="12" viewBox="0 0 15 12"><path d="M1 6 l4 4 L14 1" stroke="#4CC38A" stroke-width="2" fill="none"/></svg>Non-members are never profiled</div>
+      </div>
+
+      <p class="caption" id="caption"></p>
+
+      <div class="chrome" id="chrome">
+        <button id="pp" aria-label="Pause">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="#D4B36A"><rect x="2" width="4" height="16"/><rect x="10" width="4" height="16"/></svg>
+        </button>
+        <div class="bar"><i id="prog"></i></div>
+        <span class="tstamp" id="time">0:00 / 0:30</span>
+      </div>
+
+      <div class="endcta" id="endcta">
+        <p class="label">That's the whole machine</p>
+        <h3>Trusted intro in. Verified money out.</h3>
+        <a class="btn btn-gold" href="#join">Request an invitation</a>
+        <button class="replay" id="replay">↺ Watch again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEDGER: HOW YOU EARN ─────────────────────── -->
+<section class="ledger-sec" id="earn">
+  <div class="wrap">
+    <p class="label">How you earn</p>
+    <h2>Four entries between a name in your phone and money in your bank.</h2>
+    <p class="lede">No links to spam, no followers required. You monetize something rarer —
+       people who actually trust you.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="no">1</div>
+        <div>
+          <h3>A business posts a paid campaign</h3>
+          <p>Real companies fund real rewards for warm introductions — flat fees or a share
+             of revenue, terms public up front.</p>
+        </div>
+        <div class="entry">
+          <div class="row"><span>“Refer a clinic — demo booked”</span><b>₹500</b></div>
+          <div class="row"><span>“CA firm intro — first invoice”</span><b>2%</b></div>
+          <div class="row"><span>“D2C brand — on conversion”</span><b>₹4,000</b></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="no">2</div>
+        <div>
+          <h3>AI finds the match in <em>your</em> contacts</h3>
+          <p>TrustOS already knows twelve of your contacts run businesses. It surfaces the fit,
+             drafts the intro, and you send it — nothing goes out without you.</p>
+        </div>
+        <div class="entry">
+          <div class="row"><span>Dr. Kavita Rane · dental clinic, Andheri</span><b>match 94%</b></div>
+          <div class="row"><span>Intro drafted · you edited · sent</span><b>2 min</b></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="no">3</div>
+        <div>
+          <h3>The outcome is verified, not claimed</h3>
+          <p>Qualified means the demo actually happened. Converted means the invoice was
+             actually paid. Two-party confirmation, every step.</p>
+        </div>
+        <div class="entry">
+          <div class="row"><span>Demo attended · 14 Jun</span><span class="stamp">VERIFIED</span></div>
+          <div class="row"><span>Deal won · invoice paid</span><span class="stamp">VERIFIED</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="no">4</div>
+        <div>
+          <h3>Escrow releases your commission</h3>
+          <p>Money is held on conversion and released after a 14-day no-dispute window —
+             through a double-entry ledger, to your bank. Auditable, every paisa.</p>
+        </div>
+        <div class="entry">
+          <div class="row"><span>Commission escrowed</span><span class="stamp hold">HELD</span></div>
+          <div class="row"><span>Day 14 · released to you</span><b style="color:#1B7F4D">+ ₹500</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="models">
+      <div class="model">
+        <p class="mt">Flat fee</p>
+        <p class="mv">₹500 – ₹4,000</p>
+        <p>Per qualified referral. Paid even before the business closes the sale — you're paid
+           for the warm door, not the whole deal.</p>
+      </div>
+      <div class="model">
+        <p class="mt">Revenue share</p>
+        <p class="mv">1 – 5%</p>
+        <p>Of the first invoice. A 2% intro to a ₹6L engagement is ₹12,000 — one introduction,
+           one message, real money.</p>
+      </div>
+      <div class="model">
+        <p class="mt">Milestone</p>
+        <p class="mv">Stacked</p>
+        <p>₹500 on the demo, ₹2,000 more on the annual contract. Long deals keep paying the
+           person who opened them.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <b>And it compounds.</b> Every settled referral raises your Trust Index — the biggest single
+      factor in it. Higher trust means the AI routes better-paying campaigns to you first, and
+      trust-gated campaigns (“Gold referrers only”) open up. On TrustOS, a reputation for good
+      referrals is a yield-bearing asset.
+    </div>
+
+    <p class="foot-note">Figures shown are illustrative campaign examples from the product demo.
+       Investment introductions earn trust, never cash — regulated territory, and we stay out of it.</p>
+  </div>
+</section>
+
+<!-- ── DIFFERENCE ───────────────────────────────── -->
+<section class="diff-sec">
+  <div class="wrap">
+    <p class="label">Why this is different</p>
+    <h2>You already have the asset. Nothing else pays you for it.</h2>
+    <div class="diffs">
+      <div class="diff">
+        <p class="vs">vs LinkedIn</p>
+        <h3>Trust, not visibility</h3>
+        <p>LinkedIn optimizes being seen by strangers. TrustOS optimizes being vouched for by
+           people who've watched you deliver — and pays on it.</p>
+      </div>
+      <div class="diff">
+        <p class="vs">vs BNI &amp; referral clubs</p>
+        <h3>Continuous, not weekly</h3>
+        <p>No 7am meetings, no attendance sheets, no paper slips. The AI passes referrals every
+           day, and a ledger — not memory — keeps the score.</p>
+      </div>
+      <div class="diff">
+        <p class="vs">vs affiliate links</p>
+        <h3>Warm intros, not spam</h3>
+        <p>Affiliates blast strangers and pray. You introduce two people who both win, your
+           trust score grows, and the next opportunity finds you.</p>
+      </div>
+    </div>
+    <div class="privacy">
+      <span>Contacts stay yours</span>
+      <span>Nothing sends without you</span>
+      <span>Trust can't be bought</span>
+      <span>Every score explains itself</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── JOIN ─────────────────────────────────────── -->
+<section class="join" id="join">
+  <div class="wrap">
+    <p class="label">Invitation-only</p>
+    <h2>Every member is vouched for. That's why the referrals are worth money.</h2>
+    <p class="lede">Five invitations per member, each one a staked piece of their own reputation.
+       If you know a member, ask them. If not, join the waitlist — members near you see
+       your request first.</p>
+    <form id="waitlist">
+      <input type="email" required placeholder="you@company.com" aria-label="Email for the waitlist">
+      <button class="btn btn-gold" type="submit">Join the waitlist</button>
+    </form>
+    <p class="ok" id="ok">You're on the list — members in your city will see your request first.</p>
+    <p class="alt">Have a code? <a href="#" >Open the app and redeem your invitation →</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="wordmark" style="font-size:11px">T R U S T O S</span>
+    <span>The operating system for trusted business relationships.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  /* ── Explainer video: scripted timeline, 5 scenes, 30s ── */
+  var scenes=[
+    {d:5,cap:'This is TrustOS. Your network is your net worth — we make it measurable.'},
+    {d:7,cap:'Import your contacts and we map who you know — privately. Nobody is messaged, nobody is profiled.'},
+    {d:6,cap:'Verified outcomes — referrals, deals, kept promises — build your Trust Index. It cannot be bought.'},
+    {d:7,cap:'AI finds the opportunities hiding in your network. The money settles through escrow, into your bank.'},
+    {d:5,cap:'Contacts stay yours. Nothing sends without you. Ready to see what your network is worth?'}
+  ];
+  var TOTAL=scenes.reduce(function(s,x){return s+x.d;},0);
+  var player=document.getElementById('player'),poster=document.getElementById('poster'),
+      chrome=document.getElementById('chrome'),cap=document.getElementById('caption'),
+      prog=document.getElementById('prog'),time=document.getElementById('time'),
+      pp=document.getElementById('pp'),endcta=document.getElementById('endcta'),
+      replay=document.getElementById('replay'),
+      sceneEls=[].slice.call(player.querySelectorAll('.scene'));
+  var t0=null,elapsedBase=0,playing=false,raf=null,curScene=-1;
+
+  function sceneAt(t){var e=t;for(var i=0;i<scenes.length;i++){if(e<=scenes[i].d)return{i:i,p:Math.min(1,e/scenes[i].d)};e-=scenes[i].d;}return{i:scenes.length-1,p:1};}
+  function fmt(s){s=Math.round(s);return '0:'+(s<10?'0':'')+s;}
+  function ease(p,a,b){var k=(p-a)/(b-a);return Math.max(0,Math.min(1,k));}
+
+  /* scene renderers */
+  var vRing=document.getElementById('vRing');
+  var canvas=document.getElementById('graph'),ctx=canvas.getContext('2d');
+  var score=document.getElementById('score'),
+      fbars=[].slice.call(player.querySelectorAll('.fbar i')),
+      avs=[].slice.call(player.querySelectorAll('.opp .av')),
+      lnk=player.querySelector('.lnk i'),settled=player.querySelector('.settled'),
+      locks=[].slice.call(player.querySelectorAll('.lockrow'));
+
+  function drawGraph(p){
+    var w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,R=Math.min(w,h)*0.36,n=7;
+    ctx.clearRect(0,0,w,h);
+    for(var i=0;i<n;i++){
+      var st=0.1+i*0.09,k=ease(p,st,st+0.25);
+      if(k<=0)continue;
+      var a=-Math.PI/2+i*2*Math.PI/n,tx=cx+Math.cos(a)*R,ty=cy+Math.sin(a)*R;
+      ctx.strokeStyle='rgba(212,179,106,.5)';ctx.lineWidth=1.6;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+(tx-cx)*k,cy+(ty-cy)*k);ctx.stroke();
+      if(k>=1){
+        ctx.fillStyle='#D4B36A';ctx.beginPath();ctx.arc(tx,ty,8,0,7);ctx.fill();
+        var k2=ease(p,0.72,1);
+        if(k2>0){var fx=cx+Math.cos(a+0.35)*R*1.5,fy=cy+Math.sin(a+0.35)*R*1.5;
+          ctx.strokeStyle='rgba(212,179,106,.25)';ctx.lineWidth=1;
+          ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx+(fx-tx)*k2,ty+(fy-ty)*k2);ctx.stroke();
+          ctx.fillStyle='rgba(212,179,106,'+(0.5*k2)+')';ctx.beginPath();ctx.arc(fx,fy,4.5,0,7);ctx.fill();}
+      }
+    }
+    ctx.fillStyle='#D4B36A';ctx.beginPath();ctx.arc(cx,cy,15,0,7);ctx.fill();
+    ctx.fillStyle='#0A1220';ctx.font='600 11px -apple-system,Segoe UI,Roboto,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('You',cx,cy);
+  }
+  function render(t){
+    var s=sceneAt(t),i=s.i,p=s.p;
+    if(i!==curScene){sceneEls.forEach(function(el,j){el.classList.toggle('on',j===i);});cap.textContent=scenes[i].cap;curScene=i;}
+    prog.style.width=(t/TOTAL*100)+'%';time.textContent=fmt(t)+' / '+fmt(TOTAL);
+    if(i===0&&vRing)vRing.style.strokeDashoffset=640-(640-186)*ease(p,0.1,0.6);
+    if(i===1)drawGraph(p);
+    if(i===2){score.textContent=Math.round(712*ease(p,0,0.5));
+      fbars.forEach(function(b,j){b.style.width=(p>0.3+j*0.15?b.getAttribute('data-w'):0)+'%';});}
+    if(i===3){avs[0].style.opacity=ease(p,0,0.2);avs[0].style.transform='scale('+(0.7+0.3*ease(p,0,0.2))+')';
+      lnk.style.transform='scaleX('+ease(p,0.15,0.45)+')';
+      avs[1].style.opacity=ease(p,0.35,0.55);avs[1].style.transform='scale('+(0.7+0.3*ease(p,0.35,0.55))+')';
+      settled.style.opacity=ease(p,0.6,0.85);}
+    if(i===4)locks.forEach(function(l,j){l.style.opacity=ease(p,0.2+j*0.16,0.4+j*0.16);});
+  }
+  function tick(ts){
+    if(!playing)return;
+    if(t0===null)t0=ts;
+    var t=elapsedBase+(ts-t0)/1000;
+    if(t>=TOTAL){render(TOTAL);stop(true);return;}
+    render(t);raf=requestAnimationFrame(tick);
+  }
+  function play(){poster.style.display='none';chrome.style.display='flex';endcta.style.display='none';
+    playing=true;t0=null;raf=requestAnimationFrame(tick);
+    pp.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="#D4B36A"><rect x="2" width="4" height="16"/><rect x="10" width="4" height="16"/></svg>';
+    pp.setAttribute('aria-label','Pause');}
+  function stop(ended){playing=false;if(raf)cancelAnimationFrame(raf);
+    if(ended){elapsedBase=0;endcta.style.display='flex';}
+    else{pp.innerHTML='<svg width="16" height="16" viewBox="0 0 16 16" fill="#D4B36A"><path d="M2 0 L16 8 L2 16 Z"/></svg>';pp.setAttribute('aria-label','Play');}}
+  poster.addEventListener('click',function(){elapsedBase=0;curScene=-1;play();});
+  replay.addEventListener('click',function(){elapsedBase=0;curScene=-1;play();});
+  pp.addEventListener('click',function(){
+    if(playing){elapsedBase=elapsedBase+(performance.now()-t0)/1000;stop(false);}
+    else play();});
+
+  /* waitlist demo */
+  document.getElementById('waitlist').addEventListener('submit',function(e){
+    e.preventDefault();document.getElementById('ok').style.display='block';
+    e.target.querySelector('button').textContent='Requested ✓';});
+})();
+</script>
+</body>
+</html>
