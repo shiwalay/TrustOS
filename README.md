@@ -26,6 +26,7 @@ Start with [`docs/00-overview.md`](docs/00-overview.md) (executive synthesis), t
 | [`13-testing-performance.md`](docs/13-testing-performance.md) | Test pyramid, contract/event/AI testing, k6 load suite, performance budgets | 30, 31 |
 | [`14-roadmap.md`](docs/14-roadmap.md) | 36-month phased roadmap, team topology, deliberate non-goals, hardest open problems | 35 |
 | [`15-opportunity-network-strategy.md`](docs/15-opportunity-network-strategy.md) | BNI first-principles deconstruction rebuilt AI-native; the Opportunity Network (10 opportunity types, one pipeline), flywheels, Delta-4 moat | strategy |
+| [`16-legal-compliance.md`](docs/16-legal-compliance.md) | Legal architecture: ToS/privacy/referral-terms structure, DPDP/RBI/SEBI/anti-MLM/AI-Act/FCRA risk answers, tax posture, compliance gaps & sequencing | legal |
 
 *(Deliverable numbers refer to the 35 items in the source brief; user journeys and IA appear in 01 and 10, sequence diagrams in 04, infrastructure diagrams in 02 and 12.)*
 
