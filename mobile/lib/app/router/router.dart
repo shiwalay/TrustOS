@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/session/onboarding_state.dart';
 import '../../features/campaigns/presentation/screens/campaigns_screen.dart';
 import '../../features/communities/presentation/screens/communities_screen.dart';
 import '../../features/contacts/presentation/screens/contacts_screen.dart';
@@ -25,8 +26,10 @@ import 'routes.dart';
 
 /// Session stub for the auth-guard redirect. Real implementation: OIDC
 /// session presence from the secure vault (09 §5.3) + biometric re-lock
-/// overlay on resume-after-5-min.
-final isAuthenticatedProvider = Provider<bool>((ref) => true);
+/// overlay on resume-after-5-min. Until then, session presence == completed
+/// onboarding, so first launch (and "Replay onboarding") lands on /onboarding.
+final isAuthenticatedProvider =
+    Provider<bool>((ref) => ref.watch(onboardedProvider));
 
 /// GoRouter — 5-tab StatefulShellRoute per 09-mobile-architecture.md §5.1.
 /// Deep links received before bootstrap completes are replayed after first

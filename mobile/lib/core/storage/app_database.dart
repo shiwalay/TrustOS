@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+import '../../features/contacts/data/local/contact_table.dart';
 import '../../features/referrals/data/local/referral_dao.dart';
 import '../../features/referrals/data/local/referral_table.dart';
 import '../../features/referrals/domain/entities/referral.dart';
@@ -25,15 +26,25 @@ part 'app_database.g.dart';
     SyncCursors,
     ReferralRows,
     ReferralCampaignRows,
+    ContactRows,
   ],
   daos: [ReferralDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
-  /// Default on-device database.
-  factory AppDatabase.open() =>
-      AppDatabase(driftDatabase(name: 'trustos'));
+  /// Default database. On the web this uses the drift WASM setup: both
+  /// `sqlite3.wasm` and `drift_worker.js` are shipped in `web/` (see
+  /// https://drift.simonbinder.eu/platforms/web/).
+  factory AppDatabase.open() => AppDatabase(
+        driftDatabase(
+          name: 'trustos',
+          web: DriftWebOptions(
+            sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+            driftWorker: Uri.parse('drift_worker.js'),
+          ),
+        ),
+      );
 
   @override
   int get schemaVersion => 1;

@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../core/demo/demo_seed.dart';
+import '../core/session/onboarding_state.dart';
 import '../features/referrals/referrals_module.dart';
 import 'app.dart';
 import 'di/providers.dart';
@@ -25,17 +28,27 @@ Future<void> bootstrap(Flavor flavor) async {
     FlutterError.presentError(details);
   };
 
+  // Fast prefs read is on the allowed startup path (09 §6.1) — the router's
+  // onboarding redirect needs it before the first frame.
+  final prefs = await SharedPreferences.getInstance();
+
   final container = ProviderContainer(
     overrides: [
       flavorConfigProvider.overrideWithValue(FlavorConfig.of(flavor)),
+      sharedPreferencesProvider.overrideWithValue(prefs),
     ],
   );
 
-  // PHASE 2 — deferred: register feature sync adapters, then start the
-  // engine (push flush → priority pulls) after the first frame.
+  // PHASE 2 — deferred: seed demo data (no-op when populated), register
+  // feature sync adapters, then start the engine (push flush → priority
+  // pulls) after the first frame.
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    container.read(referralsSyncRegistrationProvider);
-    unawaited(container.read(syncEngineProvider).start());
+    unawaited(
+      DemoSeeder.seedIfEmpty(container.read(databaseProvider)).then((_) {
+        container.read(referralsSyncRegistrationProvider);
+        unawaited(container.read(syncEngineProvider).start());
+      }),
+    );
   });
 
   runApp(
