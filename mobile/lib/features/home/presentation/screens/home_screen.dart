@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/routes.dart';
+import '../../../../core/demo/demo_providers.dart';
+import '../../../../core/demo/demo_seed.dart';
 import '../../../../core/design_system/components/trust_band_ring.dart';
+import '../../../../core/design_system/tokens/colors.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
 
-/// Home — the daily loop (10-ux-design.md W2: pulse + digest + attention
-/// queue, BFF-fed). Skeleton: static sections + a working path into the
-/// referrals vertical slice; real cards hydrate from Drift projections in a
-/// later milestone.
-class HomeScreen extends StatelessWidget {
+/// Home — the daily loop (10-ux-design.md W2): trust pulse + a *small*
+/// attention queue (three actions beat thirty notifications — docs/15 §9).
+/// Hydrates from the seeded Drift read models; production swaps the source
+/// to the BFF with the same shapes.
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final caution = isDark ? EmberColors.cautionDark : EmberColors.cautionLight;
+    final attention = ref.watch(homeAttentionProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('TrustOS')),
       body: ListView(
@@ -35,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                             style: theme.textTheme.titleMedium),
                         const SizedBox(height: EmberSpacing.xxs),
                         Text(
-                          'Sample data — hydrates from trust-service after sync.',
+                          '+8 this month — two settled referrals.',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -62,15 +70,73 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: EmberSpacing.xs),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.card_giftcard_outlined),
-              title: const Text('Demo referral campaign'),
-              subtitle: const Text('Try the offline-first submit flow'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () =>
-                  context.push(Routes.campaignReferrals(Routes.demoCampaignId)),
+          attention.when(
+            loading: () => const Padding(
+              padding: EdgeInsets.all(EmberSpacing.lg),
+              child: Center(child: CircularProgressIndicator()),
             ),
+            error: (e, _) => Text('Could not load your feed: $e'),
+            data: (data) {
+              final quiet = data.quietContacts.take(2).toList();
+              final campaigns = data.openCampaigns.take(2).toList();
+              return Column(
+                children: [
+                  for (final c in quiet)
+                    Card(
+                      margin: const EdgeInsets.only(bottom: EmberSpacing.xs),
+                      child: ListTile(
+                        leading:
+                            Icon(Icons.nightlight_outlined, color: caution),
+                        title: Text('${c.name} is going quiet'),
+                        subtitle: Text(
+                          '${c.daysSinceInteraction} days since you spoke · '
+                          'strength ${c.relationshipStrength} — strong ties '
+                          'fade quietly',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.go(Routes.network),
+                      ),
+                    ),
+                  if (data.pendingSyncCount > 0)
+                    Card(
+                      margin: const EdgeInsets.only(bottom: EmberSpacing.xs),
+                      child: ListTile(
+                        leading: Icon(Icons.cloud_upload_outlined,
+                            color: caution),
+                        title: Text(
+                          '${data.pendingSyncCount} referrals waiting to sync',
+                        ),
+                        subtitle: const Text(
+                          'Queued offline — they send themselves when '
+                          'you are back online',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(Routes
+                            .campaignReferrals(DemoSeeder.campaignClinic)),
+                      ),
+                    ),
+                  for (final cmp in campaigns)
+                    Card(
+                      margin: const EdgeInsets.only(bottom: EmberSpacing.xs),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.card_giftcard_outlined,
+                          color: theme.colorScheme.tertiary,
+                        ),
+                        title: Text(cmp.title),
+                        subtitle: Text(
+                          cmp.expiresAt == null
+                              ? 'Open campaign'
+                              : 'Closes in ${cmp.expiresAt!.difference(DateTime.now().toUtc()).inDays} days',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () =>
+                            context.push(Routes.campaignReferrals(cmp.id)),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),

@@ -23,6 +23,14 @@ class AhaInsight {
   final String body;
 }
 
+/// All seeded contacts, strongest ties first — the Network tab read model.
+final demoContactsProvider = FutureProvider<List<ContactRow>>((ref) async {
+  final db = ref.watch(databaseProvider);
+  return (db.select(db.contactRows)
+        ..orderBy([(c) => OrderingTerm.desc(c.relationshipStrength)]))
+      .get();
+});
+
 final demoContactCountProvider = FutureProvider<int>((ref) async {
   final db = ref.watch(databaseProvider);
   final count = db.contactRows.id.count();
