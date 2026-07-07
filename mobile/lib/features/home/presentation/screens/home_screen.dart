@@ -53,7 +53,14 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: EmberSpacing.md),
-          Text('NEEDS YOUR ATTENTION', style: theme.textTheme.bodySmall),
+          Text(
+            'NEEDS YOUR ATTENTION',
+            style: theme.textTheme.bodySmall?.copyWith(
+              letterSpacing: 1.4,
+              fontWeight: FontWeight.w600,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
           const SizedBox(height: EmberSpacing.xs),
           Card(
             child: ListTile(

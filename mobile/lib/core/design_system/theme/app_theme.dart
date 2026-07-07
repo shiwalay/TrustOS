@@ -22,6 +22,8 @@ abstract final class AppTheme {
       onPrimaryContainer: isDark ? EmberColors.brandInkDark : EmberColors.brandInkLight,
       secondary: isDark ? EmberColors.infoDark : EmberColors.infoLight,
       onSecondary: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
+      tertiary: isDark ? EmberColors.brandGoldDark : EmberColors.brandGoldLight,
+      onTertiary: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
       error: isDark ? EmberColors.criticalDark : EmberColors.criticalLight,
       onError: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
       surface: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceBaseLight,
@@ -54,12 +56,38 @@ abstract final class AppTheme {
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colorScheme.surface,
       textTheme: textTheme,
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        backgroundColor: colorScheme.surface,
+        titleTextStyle: EmberTypography.brandDisplay.copyWith(
+          fontSize: 22,
+          height: 28 / 22,
+          color: colorScheme.onSurface,
+        ),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: colorScheme.surface,
+        indicatorColor: colorScheme.tertiary.withValues(alpha: 0.16),
+        labelTextStyle: WidgetStatePropertyAll(
+          EmberTypography.caption.copyWith(
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+            color: colorScheme.onSurface,
+          ),
+        ),
+      ),
       cardTheme: CardThemeData(
         color: colorScheme.surfaceContainer,
         elevation: isDark ? 0 : 1, // dark swaps shadow for tonal lift (§4.1)
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(EmberRadii.card),
+          side: isDark
+              ? BorderSide(
+                  color: colorScheme.tertiary.withValues(alpha: 0.18),
+                  width: 0.6,
+                )
+              : BorderSide.none,
         ),
       ),
       chipTheme: ChipThemeData(
@@ -69,7 +97,11 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: const Size.fromHeight(EmberSpacing.minTouchTarget),
+          minimumSize: const Size.fromHeight(52),
+          textStyle: EmberTypography.body.copyWith(
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.3,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(EmberRadii.button),
           ),

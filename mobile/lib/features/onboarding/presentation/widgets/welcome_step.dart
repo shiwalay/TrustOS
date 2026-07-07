@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/components/trust_band_ring.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/design_system/tokens/typography.dart';
 
 /// Step 1 — the promise. One calm screen, one CTA; rotating value points
 /// instead of a swipe carousel (no carousel fatigue).
@@ -50,6 +51,15 @@ class _WelcomeStepState extends State<WelcomeStep> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Spacer(),
+          Text(
+            'T R U S T O S',
+            style: EmberTypography.wordmark.copyWith(
+              color: theme.colorScheme.tertiary,
+            ),
+            textAlign: TextAlign.center,
+            semanticsLabel: 'TrustOS',
+          ),
+          const SizedBox(height: EmberSpacing.xl),
           // Trust-band ring motif: the product's core artifact, previewed.
           const Center(
             child: TrustBandRing(
@@ -60,8 +70,9 @@ class _WelcomeStepState extends State<WelcomeStep> {
           ),
           const SizedBox(height: EmberSpacing.xl),
           Text(
-            'Your relationships are\nyour net worth.',
-            style: theme.textTheme.displaySmall,
+            'Your network is\nyour net worth.',
+            style: EmberTypography.brandDisplay
+                .copyWith(color: theme.colorScheme.onSurface),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: EmberSpacing.md),

@@ -43,3 +43,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true # flutter gen-l10n (config in l10n.yaml)
+  fonts:
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay.ttf
