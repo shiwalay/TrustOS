@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/demo/demo_providers.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
+import 'explainer_video.dart';
 
 /// Step 3 — consent-first contact import (docs/10-ux-design.md W3): the
 /// privacy promise comes BEFORE anything happens, and skipping is honest
@@ -86,6 +87,10 @@ class _ImportStepState extends ConsumerState<ImportStep>
             'businesses, who is going quiet, who can introduce you.',
             style: theme.textTheme.bodyMedium,
           ),
+          const SizedBox(height: EmberSpacing.md),
+          // Hesitation peaks here — the AI explainer answers "what happens
+          // to my contacts?" before asking for them.
+          const ExplainerVideoCard(),
           const Spacer(),
           if (_importing)
             AnimatedBuilder(
