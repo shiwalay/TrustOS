@@ -9,6 +9,7 @@ import '../../features/copilot/presentation/screens/copilot_screen.dart';
 import '../../features/deals/presentation/screens/deals_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/identity/presentation/screens/identity_screen.dart';
+import '../../features/invites/presentation/screens/invites_screen.dart';
 import '../../features/knowledge/presentation/screens/knowledge_screen.dart';
 import '../../features/leaderboards/presentation/screens/leaderboards_screen.dart';
 import '../../features/marketplace/presentation/screens/marketplace_screen.dart';
@@ -114,6 +115,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                 GoRoute(
                   path: 'leaderboards',
                   builder: (context, state) => const LeaderboardsScreen(),
+                ),
+                GoRoute(
+                  path: 'invites',
+                  builder: (context, state) => const InvitesScreen(),
                 ),
                 GoRoute(
                   path: 'identity',

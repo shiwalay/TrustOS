@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
 import '../widgets/aha_step.dart';
 import '../widgets/import_step.dart';
+import '../widgets/invite_step.dart';
 import '../widgets/verify_step.dart';
 import '../widgets/welcome_step.dart';
 
 /// First-session activation flow — docs/10-ux-design.md §5.1 ("aha in
-/// < 3 minutes"). Four steps: Welcome → Verify (T1 only, progressive
-/// disclosure) → Contact import (consent-first, honest skip) → The Reveal.
+/// < 3 minutes"). Five steps: Welcome → Invitation (invite-only gate; an
+/// invite is a vouch — docs/15) → Verify (T1 only, progressive disclosure)
+/// → Contact import (consent-first, honest skip) → The Reveal.
 ///
 /// Completing the flow flips [onboardedProvider]; the router redirect
 /// (app/router/router.dart) then lands the user on Home.
@@ -30,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _next() {
-    setState(() => _step = (_step + 1).clamp(0, 3));
+    setState(() => _step = (_step + 1).clamp(0, 4));
     _pageController.animateToPage(
       _step,
       duration: const Duration(milliseconds: 320), // Emphasized (10-ux §4.3)
@@ -55,6 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   WelcomeStep(onNext: _next),
+                  InviteStep(onNext: _next),
                   VerifyStep(onNext: _next),
                   ImportStep(onNext: _next),
                   const AhaStep(),
@@ -77,11 +80,11 @@ class _StepDots extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Semantics(
-      label: 'Onboarding step ${current + 1} of 4',
+      label: 'Onboarding step ${current + 1} of 5',
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for (var i = 0; i < 4; i++)
+          for (var i = 0; i < 5; i++)
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               margin:

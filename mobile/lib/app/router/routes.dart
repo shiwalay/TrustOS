@@ -25,6 +25,7 @@ abstract final class Routes {
   static const campaigns = '/you/campaigns';
   static const leaderboards = '/you/leaderboards';
   static const identity = '/you/identity';
+  static const invites = '/you/invites';
   static const settings = '/you/settings';
 
   // Referrals (pushed over the shell — deep-linkable from push notifications).

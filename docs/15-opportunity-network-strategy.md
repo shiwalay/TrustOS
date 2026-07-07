@@ -160,6 +160,16 @@ Type-specific parameters, same skeleton:
 
 **Why this wins:** referral-only liquidity is the hardest cold-start in the category (PRD risk C1). Six of the ten types (mentorship, collaboration, speaking, community invites, partnership, hiring-lite) need **no money movement** — they generate verified outcomes and trust *before* the referral marketplace has liquidity, then hand the warmed graph to the monetized types. The Opportunity Network is simultaneously the cold-start solution and the moat.
 
+### 7.1 Invitation-only membership (⊕ launch mechanic)
+
+TrustOS launches **invitation-only**: joining requires a member's code (`TRUST-XXXX`), and **an invitation is a vouch** — not marketing.
+
+- **Mechanics:** every member holds a scarce allotment (5, replenished by verified contribution, never purchasable). Redeeming a code creates the invitee's first `:VOUCHES_FOR` edge in Neo4j and seeds their DTI cold-start prior from the inviter's band (damped). Codes are single-use, expiring, issued by identity-service; the invite → activation → first-verified-outcome funnel is tracked like any opportunity type (community-invite).
+- **Skin in the game:** an invitee's early conduct reflects back — fraud or spam by the invitee damps the *inviter's* vouch weight (same personalized-PageRank damping as all vouches, 06 §1). This makes members curate, which is the entire quality bet of BNI's application committee, decentralized.
+- **Growth without spam:** the member-facing surface is a pre-written, personal invite message carrying the code ("I'm using one of my five invitations on you") — sent person-to-person through the member's own channels. Scarcity + provenance replaces paid acquisition at launch and is coherent with the premium brand ("chosen, not acquired").
+- **The door stays ajar:** no invitation → visible waitlist; nearby members with matching-industry fit are shown waitlist requests as community-invite opportunities. Uninvited demand becomes inventory, not a dead end.
+- **Exit criteria:** invitation-only is a *phase*, not a religion — it lifts early trust density and brand, but caps growth. Relax per-city once liquidity gates (PRD §9) are met, keeping vouch-seeded onboarding as the default path even when codes are no longer required.
+
 ## 8. System Architecture & AI Enhancements (delta view)
 
 No new services; four grow (all within [`02-system-architecture.md`](02-system-architecture.md) patterns):

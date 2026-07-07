@@ -19,6 +19,8 @@ class YouScreen extends ConsumerWidget {
         children: [
           _tile(context, Icons.workspace_premium_outlined, 'Trust profile',
               Routes.trustProfile),
+          _tile(context, Icons.card_membership_outlined, 'Invitations',
+              Routes.invites),
           _tile(context, Icons.token_outlined, 'Rewards', Routes.rewards),
           _tile(context, Icons.handshake_outlined, 'My deals', Routes.deals),
           _tile(context, Icons.campaign_outlined, 'My campaigns',
