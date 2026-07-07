@@ -25,12 +25,13 @@ Start with [`docs/00-overview.md`](docs/00-overview.md) (executive synthesis), t
 | [`12-devops-platform.md`](docs/12-devops-platform.md) | EKS/GitOps/CI-CD, canary + blue-green, observability & SLOs, DR, scaling ladder, cost model | 12, 32, 33, 34 |
 | [`13-testing-performance.md`](docs/13-testing-performance.md) | Test pyramid, contract/event/AI testing, k6 load suite, performance budgets | 30, 31 |
 | [`14-roadmap.md`](docs/14-roadmap.md) | 36-month phased roadmap, team topology, deliberate non-goals, hardest open problems | 35 |
+| [`15-opportunity-network-strategy.md`](docs/15-opportunity-network-strategy.md) | BNI first-principles deconstruction rebuilt AI-native; the Opportunity Network (10 opportunity types, one pipeline), flywheels, Delta-4 moat | strategy |
 
 *(Deliverable numbers refer to the 35 items in the source brief; user journeys and IA appear in 01 and 10, sequence diagrams in 04, infrastructure diagrams in 02 and 12.)*
 
 ## Reading Paths
 
-- **Product/founder:** 00 → 01 → 10 → 14
+- **Product/founder:** 00 → 15 → 01 → 10 → 14
 - **Backend engineer:** _shared-context → 02 → 03 → 04 → 05
 - **Mobile engineer:** _shared-context → 09 → 10 → 04
 - **AI engineer:** _shared-context → 07 → 08 → 06
