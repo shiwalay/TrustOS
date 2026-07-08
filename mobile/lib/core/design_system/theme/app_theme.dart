@@ -1,40 +1,48 @@
 import 'package:flutter/material.dart';
 
-import '../tokens/colors.dart';
 import '../tokens/spacing.dart';
 import '../tokens/typography.dart';
 import 'trust_band_colors.dart';
 
-/// Ember theme builder — maps 10-ux-design.md §4.1 tokens onto Material 3.
+/// Neo-Minimal Intelligence — the single, app-wide visual language
+/// (directive: one style, zero exceptions). Light-committed: light() and
+/// dark() both return the same Neo theme so every screen is identical
+/// regardless of the OS setting. "Less interface. More intelligence."
 abstract final class AppTheme {
-  static ThemeData light() => _build(Brightness.light);
+  // The approved palette — the only colors permitted.
+  static const _bg = Color(0xFFFAFAFA);
+  static const _surface = Color(0xFFFFFFFF);
+  static const _text = Color(0xFF111827);
+  static const _text2 = Color(0xFF6B7280);
+  static const _divider = Color(0xFFE5E7EB);
+  static const _accent = Color(0xFF2563EB);
+  static const _sunken = Color(0xFFF3F4F6);
+  static const _error = Color(0xFFEF4444);
 
-  static ThemeData dark() => _build(Brightness.dark);
+  static ThemeData light() => _build();
+  static ThemeData dark() => _build();
 
-  static ThemeData _build(Brightness brightness) {
-    final isDark = brightness == Brightness.dark;
-
-    final colorScheme = ColorScheme(
-      brightness: brightness,
-      primary: isDark ? EmberColors.brandPrimaryDark : EmberColors.brandPrimaryLight,
-      onPrimary: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
-      primaryContainer: isDark ? EmberColors.brandInkLight : EmberColors.brandInkDark,
-      onPrimaryContainer: isDark ? EmberColors.brandInkDark : EmberColors.brandInkLight,
-      secondary: isDark ? EmberColors.infoDark : EmberColors.infoLight,
-      onSecondary: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
-      tertiary: isDark ? EmberColors.brandGoldDark : EmberColors.brandGoldLight,
-      onTertiary: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
-      error: isDark ? EmberColors.criticalDark : EmberColors.criticalLight,
-      onError: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceRaisedLight,
-      surface: isDark ? EmberColors.surfaceBaseDark : EmberColors.surfaceBaseLight,
-      onSurface: isDark ? EmberColors.textPrimaryDark : EmberColors.textPrimaryLight,
-      surfaceContainerHighest:
-          isDark ? EmberColors.surfaceSunkenDark : EmberColors.surfaceSunkenLight,
-      surfaceContainer:
-          isDark ? EmberColors.surfaceRaisedDark : EmberColors.surfaceRaisedLight,
-      onSurfaceVariant:
-          isDark ? EmberColors.textSecondaryDark : EmberColors.textSecondaryLight,
-      outline: isDark ? EmberColors.textSecondaryDark : EmberColors.textSecondaryLight,
+  static ThemeData _build() {
+    const colorScheme = ColorScheme(
+      brightness: Brightness.light,
+      primary: _accent,
+      onPrimary: Colors.white,
+      primaryContainer: Color(0x142563EB),
+      onPrimaryContainer: _accent,
+      secondary: _accent,
+      onSecondary: Colors.white,
+      // One accent only — the former gold `tertiary` now resolves to blue,
+      // unifying every screen that reads colorScheme.tertiary.
+      tertiary: _accent,
+      onTertiary: Colors.white,
+      error: _error,
+      onError: Colors.white,
+      surface: _surface,
+      onSurface: _text,
+      surfaceContainerHighest: _sunken,
+      surfaceContainer: _surface,
+      onSurfaceVariant: _text2,
+      outline: _divider,
     );
 
     final textTheme = TextTheme(
@@ -44,79 +52,149 @@ abstract final class AppTheme {
       bodyLarge: EmberTypography.body,
       bodyMedium: EmberTypography.secondary,
       bodySmall: EmberTypography.caption,
-      labelLarge: EmberTypography.secondary.copyWith(fontWeight: FontWeight.w600),
-    ).apply(
-      bodyColor: colorScheme.onSurface,
-      displayColor: colorScheme.onSurface,
-    );
+      labelLarge:
+          EmberTypography.secondary.copyWith(fontWeight: FontWeight.w600),
+    ).apply(bodyColor: _text, displayColor: _text);
 
     return ThemeData(
       useMaterial3: true,
-      brightness: brightness,
+      brightness: Brightness.light,
       colorScheme: colorScheme,
-      scaffoldBackgroundColor: colorScheme.surface,
+      // One font family, everywhere.
+      fontFamily: 'Inter',
+      scaffoldBackgroundColor: _bg,
+      dividerColor: _divider,
+      dividerTheme: const DividerThemeData(color: _divider, thickness: 1),
       textTheme: textTheme,
-      appBarTheme: AppBarTheme(
-        centerTitle: true,
-        backgroundColor: colorScheme.surface,
-        titleTextStyle: EmberTypography.brandDisplay.copyWith(
-          fontSize: 22,
-          height: 28 / 22,
-          color: colorScheme.onSurface,
+      splashFactory: InkSparkle.splashFactory,
+      appBarTheme: const AppBarTheme(
+        centerTitle: false, // Linear/Notion-style left alignment
+        backgroundColor: _bg,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        titleTextStyle: TextStyle(
+          fontFamily: 'Inter',
+          fontSize: 20,
+          height: 1.3,
+          fontWeight: FontWeight.w600,
+          color: _text,
         ),
+        iconTheme: IconThemeData(color: _text),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: colorScheme.surface,
-        indicatorColor: colorScheme.tertiary.withValues(alpha: 0.16),
+        backgroundColor: _surface,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        height: 64,
+        indicatorColor: const Color(0x142563EB),
         labelTextStyle: WidgetStatePropertyAll(
           EmberTypography.caption.copyWith(
             fontSize: 11,
             fontWeight: FontWeight.w500,
-            color: colorScheme.onSurface,
+            color: _text,
           ),
         ),
+        iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
+              color: states.contains(WidgetState.selected) ? _accent : _text2,
+            )),
       ),
+      // One card system: white, radius 20, one soft shadow, no border.
       cardTheme: CardThemeData(
-        color: colorScheme.surfaceContainer,
-        elevation: isDark ? 0 : 1, // dark swaps shadow for tonal lift (§4.1)
+        color: _surface,
+        surfaceTintColor: Colors.transparent,
+        elevation: 1,
         margin: EdgeInsets.zero,
+        shadowColor: const Color(0x14111827),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(EmberRadii.card),
-          side: isDark
-              ? BorderSide(
-                  color: colorScheme.tertiary.withValues(alpha: 0.18),
-                  width: 0.6,
-                )
-              : BorderSide.none,
+          borderRadius: BorderRadius.circular(20),
         ),
       ),
       chipTheme: ChipThemeData(
+        backgroundColor: _sunken,
+        side: BorderSide.none,
+        labelStyle: EmberTypography.caption.copyWith(color: _text),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(EmberRadii.chip),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: const Size.fromHeight(52),
-          textStyle: EmberTypography.body.copyWith(
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.3,
-          ),
+          backgroundColor: _accent,
+          foregroundColor: Colors.white,
+          minimumSize: const Size.fromHeight(48),
+          elevation: 0,
+          textStyle: EmberTypography.body.copyWith(fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(EmberRadii.button),
+            borderRadius: BorderRadius.circular(16),
           ),
         ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: _accent,
+          minimumSize: const Size.fromHeight(48),
+          side: const BorderSide(color: _divider),
+          textStyle: EmberTypography.body.copyWith(fontWeight: FontWeight.w600),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: _accent,
+          textStyle: EmberTypography.body.copyWith(fontWeight: FontWeight.w600),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: _surface,
+        isDense: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _divider),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _divider),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: _accent, width: 2),
+        ),
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: _accent,
+        linearTrackColor: _divider,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((s) =>
+            s.contains(WidgetState.selected) ? Colors.white : _text2),
+        trackColor: WidgetStateProperty.resolveWith((s) =>
+            s.contains(WidgetState.selected) ? _accent : _divider),
+        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      ),
+      snackBarTheme: const SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: _text,
       ),
       bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: _surface,
+        surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(EmberRadii.sheetTop),
-          ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
       ),
-      extensions: <ThemeExtension<dynamic>>[
-        isDark ? const TrustBandColors.dark() : const TrustBandColors.light(),
-      ],
+      dialogTheme: DialogThemeData(
+        backgroundColor: _surface,
+        surfaceTintColor: Colors.transparent,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      // Trust bands are status/progress (an allowed color use), kept as the
+      // single restrained band palette.
+      extensions: const <ThemeExtension<dynamic>>[TrustBandColors.light()],
     );
   }
 }

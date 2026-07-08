@@ -5,31 +5,30 @@ import 'package:flutter/painting.dart';
 ///  secondary 14/20 · caption 12/16 · scoreXL 44/48 (tabular, semibold)`.
 /// Family: Inter + Noto per script; the skeleton relies on platform fallback.
 abstract final class EmberTypography {
-  /// Serif for brand/display moments only — Playfair Display (OFL), bundled
-  /// as a variable font so it renders identically on every platform,
-  /// including Flutter web's CanvasKit (which cannot see system fonts).
-  /// Body stays sans.
-  static const brandSerifFamily = 'PlayfairDisplay';
+  /// One font family across the whole app (directive: no decorative fonts).
+  static const family = 'Inter';
 
   static const display = TextStyle(
+    fontFamily: family,
     fontSize: 32,
     height: 38 / 32,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     letterSpacing: -0.4,
   );
 
   /// Brand display — the hero voice ("Your network is your net worth.").
+  /// Now Inter (bold, tight) — a single typographic system, no serif.
   static const brandDisplay = TextStyle(
-    fontFamily: brandSerifFamily,
+    fontFamily: family,
     fontSize: 34,
-    height: 44 / 34,
-    fontWeight: FontWeight.w600,
-    fontVariations: [FontVariation('wght', 600)],
-    letterSpacing: 0,
+    height: 42 / 34,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.6,
   );
 
   /// Wordmark — small, generously letterspaced caps ("T R U S T O S").
   static const wordmark = TextStyle(
+    fontFamily: family,
     fontSize: 13,
     height: 16 / 13,
     fontWeight: FontWeight.w600,

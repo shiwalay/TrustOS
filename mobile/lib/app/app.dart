@@ -6,9 +6,9 @@ import '../core/l10n/generated/app_localizations.dart';
 import 'di/providers.dart';
 import 'router/router.dart';
 
-/// MaterialApp.router — Ember light/dark themes, locale resolution from
-/// generated AppLocalizations (en + hi in the skeleton; launch set per
-/// 09-mobile-architecture.md §7).
+/// MaterialApp.router — one visual language (Neo-Minimal Intelligence),
+/// light-committed so every screen is identical regardless of the OS theme
+/// (design directive: one style, zero exceptions).
 class TrustOsApp extends ConsumerWidget {
   const TrustOsApp({super.key});
 
@@ -20,7 +20,8 @@ class TrustOsApp extends ConsumerWidget {
     return MaterialApp.router(
       title: config.appTitle,
       theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
+      darkTheme: AppTheme.light(),
+      themeMode: ThemeMode.light,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router,

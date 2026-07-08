@@ -25,8 +25,9 @@ class TrustBandRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final band = TrustBand.fromScore(score);
-    final bandColors = Theme.of(context).extension<TrustBandColors>()!;
-    final color = bandColors.of(band);
+    // One accent only (Neo directive): the arc is the single blue accent;
+    // the band is encoded by its label + segment ticks, not by a second hue.
+    final color = Theme.of(context).colorScheme.primary;
 
     // RepaintBoundary: rings sit inside scrolling tiles (09 §6 scroll budget).
     return Semantics(
@@ -54,10 +55,9 @@ class TrustBandRing extends StatelessWidget {
                     ),
                     Text(
                       band.label.toUpperCase(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: color, letterSpacing: 1.2),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          letterSpacing: 1.2),
                     ),
                   ],
                 ),

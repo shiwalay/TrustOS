@@ -30,15 +30,18 @@ abstract final class EmberColors {
   static const brandGoldLight = Color(0xFFA98B45);
   static const brandGoldDark = Color(0xFFD9BC7A);
 
-  // semantic
-  static const positiveLight = Color(0xFF1B7F4D); // confirmed money, success
-  static const positiveDark = Color(0xFF4CC38A);
-  static const cautionLight = Color(0xFF9A6700); // pending, offline, expiring
-  static const cautionDark = Color(0xFFE2B93B);
-  static const criticalLight = Color(0xFFB3261E); // errors — never score drops
-  static const criticalDark = Color(0xFFF2705D);
-  static const infoLight = Color(0xFF0B6E7F);
-  static const infoDark = Color(0xFF57C2D4);
+  // Semantic status — the approved Neo palette (success/warning/error).
+  // Slightly deepened from the reference hexes for AA text contrast; these
+  // are the only non-accent colors, used for status/progress only.
+  static const positiveLight = Color(0xFF16A34A); // success (Neo #22C55E)
+  static const positiveDark = Color(0xFF22C55E);
+  static const cautionLight = Color(0xFFB45309); // warning (Neo #F59E0B)
+  static const cautionDark = Color(0xFFF59E0B);
+  static const criticalLight = Color(0xFFDC2626); // error (Neo #EF4444)
+  static const criticalDark = Color(0xFFEF4444);
+  // Info == the single Neo accent (blue); teal is off-palette and removed.
+  static const infoLight = Color(0xFF2563EB);
+  static const infoDark = Color(0xFF2563EB);
 
   // Trust bands (§4.2) — colorblind-safe, no red↔green axis.
   static const bandStarterLight = Color(0xFF64748B); // slate
