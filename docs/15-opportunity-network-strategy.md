@@ -170,6 +170,22 @@ TrustOS launches **invitation-only**: joining requires a member's code (`TRUST-X
 - **The door stays ajar:** no invitation → visible waitlist; nearby members with matching-industry fit are shown waitlist requests as community-invite opportunities. Uninvited demand becomes inventory, not a dead end.
 - **Exit criteria:** invitation-only is a *phase*, not a religion — it lifts early trust density and brand, but caps growth. Relax per-city once liquidity gates (PRD §9) are met, keeping vouch-seeded onboarding as the default path even when codes are no longer required.
 
+### 7.2 The Ask & Offer board (⊕ the opportunity funnel's mouth)
+
+Every opportunity in §7 starts as a signal. The **Ask & Offer board** is where members declare those signals in plain language — and a declared intent is the single highest-precision input the opportunity engine has.
+
+- **Two post types.** An **Ask** ("I need a warm intro to a CFO", "a reliable CA", "500 units of eco packaging") and an **Offer** ("5,000 sq ft of spare warehousing", "mentoring two D2C founders", "hiring a senior engineer"). An Ask matched to an Offer *is* an Opportunity — it enters the existing lifecycle (§7: `detected → suggested → accepted_by_both → …`). The board is the human-authored top of the funnel; the engine does the routing.
+- **Visible to anyone, surfaced by relevance — not a firehose.** Posts are public, but each member's feed is trust-and-relevance ranked (embedding fit to their expertise/needs + graph proximity + poster's trust band + declared intents + freshness), community/city first. "Discoverable by anyone" ≠ "a global chronological dump."
+- **Three ways to act, and the third is the point:**
+  1. **Respond** ("I can help" / "I want this") → opens a double-opt-in thread; on a verified outcome it settles and scores like any opportunity.
+  2. **Relay / push further** → forward a post to a contact who fits. This turns every member into a *router of opportunities*: "I don't have this, but I know who does." The relayer becomes the **connector**, and a relay chain that ends in a verified fulfilment credits the connector (relationship/community-contribution component of the DTI). Multi-hop relays are traceable as a `:RELAYED` edge in Neo4j, so connector chains are auditable and creditable.
+  3. **Boost/endorse** → a light amplification/vouch signal that lifts a post in trusted feeds.
+- **Where it owns:** an Ask/Offer is a lightweight, human-authored opportunity seed in **networking-service** (front door to the opportunity engine); community-scoped boards surface via community-service; the "Asks & offers" segment of the Daily Briefing (18 §1.3) is this same board, pre-collected overnight and ordered by match strength.
+- **Anti-spam & integrity:** posting is tier-gated (T1+) and frequency-governed (no flooding the board); low-quality/spam posts down-rank and route to moderation (18 §2); only *verified two-party outcomes* score, so gaming the board earns nothing.
+- ⊕ Events: `board.post.created.v1`, `board.post.responded.v1`, `board.post.relayed.v1`, `board.post.matched.v1`, `board.post.fulfilled.v1`, `board.post.expired.v1`. ⊕ Data: `ask_offer_posts`, `post_responses`, `post_relays` (the connector graph), `post_matches`.
+
+This is the async, continuous version of the BNI meeting's "asks & offers" round — and the relay mechanic is the trust graph doing what it exists to do: warm-route an opportunity to the person who can actually close it.
+
 ## 8. System Architecture & AI Enhancements (delta view)
 
 No new services; four grow (all within [`02-system-architecture.md`](02-system-architecture.md) patterns):

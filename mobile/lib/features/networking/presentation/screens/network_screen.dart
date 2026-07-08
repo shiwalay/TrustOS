@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/routes.dart';
 import '../../../../core/demo/demo_providers.dart';
 import '../../../../core/design_system/tokens/colors.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
@@ -33,6 +35,18 @@ class NetworkScreen extends ConsumerWidget {
                 '$quiet going quiet',
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ),
+              const SizedBox(height: EmberSpacing.sm),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.forum_outlined,
+                      color: theme.colorScheme.tertiary),
+                  title: const Text('Ask & Offer board'),
+                  subtitle: const Text(
+                      'Post what you need or can give — the network responds'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Routes.board),
+                ),
               ),
               const SizedBox(height: EmberSpacing.md),
               for (final c in rows) _RelationshipTile(contact: c),

@@ -19,6 +19,13 @@ class ActionHubScreen extends StatelessWidget {
         children: [
           _verb(
             context,
+            icon: Icons.forum_outlined,
+            title: 'Post an ask or offer',
+            subtitle: 'Tell the network what you need — or what you can give',
+            onTap: () => context.push(Routes.board),
+          ),
+          _verb(
+            context,
             icon: Icons.podcasts_outlined,
             title: 'Daily briefing',
             subtitle: 'Your community’s 15-min call · starts 9:00 AM',

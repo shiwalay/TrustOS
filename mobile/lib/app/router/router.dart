@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/session/onboarding_state.dart';
+import '../../features/board/presentation/screens/board_screen.dart';
 import '../../features/briefing/presentation/screens/briefing_screen.dart';
 import '../../features/campaigns/presentation/screens/campaigns_screen.dart';
 import '../../features/communities/presentation/screens/communities_screen.dart';
@@ -162,6 +163,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.briefing,
         builder: (context, state) => const BriefingScreen(),
+      ),
+      GoRoute(
+        path: Routes.board,
+        builder: (context, state) => const BoardScreen(),
       ),
     ],
   );
