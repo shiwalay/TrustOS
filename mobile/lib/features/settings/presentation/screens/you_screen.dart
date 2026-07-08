@@ -29,6 +29,8 @@ class YouScreen extends ConsumerWidget {
               Routes.leaderboards),
           _tile(context, Icons.verified_user_outlined,
               'Identity & verification', Routes.identity),
+          _tile(context, Icons.shield_outlined, 'Account standing',
+              Routes.standing),
           _tile(context, Icons.settings_outlined, 'Settings', Routes.settings),
           const Divider(),
           ListTile(

@@ -19,6 +19,13 @@ class ActionHubScreen extends StatelessWidget {
         children: [
           _verb(
             context,
+            icon: Icons.podcasts_outlined,
+            title: 'Daily briefing',
+            subtitle: 'Your community’s 15-min call · starts 9:00 AM',
+            onTap: () => context.push(Routes.briefing),
+          ),
+          _verb(
+            context,
             icon: Icons.card_giftcard_outlined,
             title: 'Submit referral',
             subtitle: 'Offline-safe — queued and confirmed',

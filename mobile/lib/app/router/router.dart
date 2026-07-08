@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/session/onboarding_state.dart';
+import '../../features/briefing/presentation/screens/briefing_screen.dart';
 import '../../features/campaigns/presentation/screens/campaigns_screen.dart';
 import '../../features/communities/presentation/screens/communities_screen.dart';
 import '../../features/contacts/presentation/screens/contacts_screen.dart';
@@ -20,6 +21,7 @@ import '../../features/relationships/presentation/screens/relationships_screen.d
 import '../../features/rewards/presentation/screens/rewards_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/settings/presentation/screens/you_screen.dart';
+import '../../features/standing/presentation/screens/standing_screen.dart';
 import '../../features/trust/presentation/screens/trust_screen.dart';
 import '../shell/action_hub_screen.dart';
 import '../shell/app_shell.dart';
@@ -128,6 +130,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   path: 'settings',
                   builder: (context, state) => const SettingsScreen(),
                 ),
+                GoRoute(
+                  path: 'standing',
+                  builder: (context, state) => const StandingScreen(),
+                ),
               ],
             ),
           ]),
@@ -152,6 +158,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.knowledge,
         builder: (context, state) => const KnowledgeScreen(),
+      ),
+      GoRoute(
+        path: Routes.briefing,
+        builder: (context, state) => const BriefingScreen(),
       ),
     ],
   );

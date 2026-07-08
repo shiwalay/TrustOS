@@ -38,6 +38,8 @@ abstract final class Routes {
   static const copilot = '/copilot';
   static const marketplace = '/marketplace';
   static const knowledge = '/knowledge';
+  static const briefing = '/briefing';
+  static const standing = '/you/standing';
 
   /// Seed campaign so the vertical slice is reachable before campaign sync
   /// exists ('cmp_' + UUIDv7 shape per _shared-context.md §1).
