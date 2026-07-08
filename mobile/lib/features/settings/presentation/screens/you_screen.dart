@@ -34,6 +34,14 @@ class YouScreen extends ConsumerWidget {
           _tile(context, Icons.settings_outlined, 'Settings', Routes.settings),
           const Divider(),
           ListTile(
+            leading: const Icon(Icons.auto_awesome_outlined),
+            title: const Text('Neo-Minimal dashboard'),
+            subtitle:
+                const Text('Preview: “Less interface. More intelligence.”'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(Routes.neo),
+          ),
+          ListTile(
             leading: const Icon(Icons.replay_outlined),
             title: const Text('Replay onboarding'),
             subtitle: const Text('Demo: walk the first-session flow again'),

@@ -29,6 +29,7 @@ Start with [`docs/00-overview.md`](docs/00-overview.md) (executive synthesis), t
 | [`16-legal-compliance.md`](docs/16-legal-compliance.md) | Legal architecture: ToS/privacy/referral-terms structure, DPDP/RBI/SEBI/anti-MLM/AI-Act/FCRA risk answers, tax posture, compliance gaps & sequencing | legal |
 | [`17-launch-marketing.md`](docs/17-launch-marketing.md) | Launch & marketing: message house, three-ring scarcity launch, community-lift playbook, channels, events, T-8w→T+90d sequence, metrics & comms risks | GTM |
 | [`18-daily-call-enforcement-awards.md`](docs/18-daily-call-enforcement-awards.md) | Daily briefing calls, 3-strike enforcement, weekly awards: implementation design | features |
+| [`19-neo-minimal-design-system.md`](docs/19-neo-minimal-design-system.md) | Neo-Minimal Intelligence design language: tokens, component library, per-screen specs; live proof at route /neo | design |
 
 *(Deliverable numbers refer to the 35 items in the source brief; user journeys and IA appear in 01 and 10, sequence diagrams in 04, infrastructure diagrams in 02 and 12.)*
 

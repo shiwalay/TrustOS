@@ -47,3 +47,6 @@ flutter:
     - family: PlayfairDisplay
       fonts:
         - asset: assets/fonts/PlayfairDisplay.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf

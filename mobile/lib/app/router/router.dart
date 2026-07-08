@@ -15,6 +15,7 @@ import '../../features/invites/presentation/screens/invites_screen.dart';
 import '../../features/knowledge/presentation/screens/knowledge_screen.dart';
 import '../../features/leaderboards/presentation/screens/leaderboards_screen.dart';
 import '../../features/marketplace/presentation/screens/marketplace_screen.dart';
+import '../../features/neo/presentation/screens/neo_dashboard_screen.dart';
 import '../../features/networking/presentation/screens/network_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/referrals/presentation/screens/my_referrals_screen.dart';
@@ -167,6 +168,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.board,
         builder: (context, state) => const BoardScreen(),
+      ),
+      GoRoute(
+        path: Routes.neo,
+        builder: (context, state) => const NeoDashboardScreen(),
       ),
     ],
   );

@@ -40,6 +40,7 @@ abstract final class Routes {
   static const knowledge = '/knowledge';
   static const briefing = '/briefing';
   static const board = '/board';
+  static const neo = '/neo';
   static const standing = '/you/standing';
 
   /// Seed campaign so the vertical slice is reachable before campaign sync
