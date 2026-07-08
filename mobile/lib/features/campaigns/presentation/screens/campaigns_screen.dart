@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/colors.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// My campaigns — the business-owner side of the referral marketplace
 /// (referral-service; PRD §4.5). Demo data.
@@ -82,7 +83,11 @@ class CampaignsScreen extends StatelessWidget {
                 'AI drafts the offer, terms, and outreach from one sentence',
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () => showDemoSnack(
+                context,
+                'AI is drafting your campaign — answer 2 questions to publish.',
+                icon: Icons.auto_awesome_outlined,
+              ),
             ),
           ),
           const SizedBox(height: EmberSpacing.md),

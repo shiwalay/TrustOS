@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// Marketplace — services, consulting, jobs with trust-band provenance
 /// (marketplace-service). Verified engagements, not review-farm stars.
 /// Demo data.
-class MarketplaceScreen extends StatelessWidget {
+class MarketplaceScreen extends StatefulWidget {
   const MarketplaceScreen({super.key});
 
+  @override
+  State<MarketplaceScreen> createState() => _MarketplaceScreenState();
+}
+
+class _MarketplaceScreenState extends State<MarketplaceScreen> {
   static const _listings = [
     ('GST cleanup & monthly filings', 'Rao & Co CA · Hyderabad',
         'Silver · 12 verified engagements', '₹15k/mo'),
@@ -18,6 +24,11 @@ class MarketplaceScreen extends StatelessWidget {
     ('Hiring: senior Flutter engineer', 'CloudPeak SaaS · Bengaluru',
         'Gold · via Rahul Verma', '₹28–35L'),
   ];
+
+  static const _filters = ['All', 'Services', 'Consulting', 'Jobs',
+    'Partnerships'];
+
+  String _selectedFilter = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +45,14 @@ class MarketplaceScreen extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                for (final f in ['All', 'Services', 'Consulting', 'Jobs',
-                  'Partnerships'])
+                for (final f in _filters)
                   Padding(
                     padding: const EdgeInsets.only(right: EmberSpacing.xs),
                     child: FilterChip(
                       label: Text(f),
-                      selected: f == 'All',
-                      onSelected: (_) {},
+                      selected: f == _selectedFilter,
+                      onSelected: (_) =>
+                          setState(() => _selectedFilter = f),
                     ),
                   ),
               ],
@@ -60,7 +71,7 @@ class MarketplaceScreen extends StatelessWidget {
                   style:
                       theme.textTheme.titleMedium?.copyWith(color: gold),
                 ),
-                onTap: () {},
+                onTap: () => showDemoSnack(context, 'Opening $title…'),
               ),
             ),
           const SizedBox(height: EmberSpacing.sm),

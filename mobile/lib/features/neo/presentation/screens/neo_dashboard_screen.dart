@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/routes.dart';
+import '../../../../core/ui/demo_feedback.dart';
 import '../neo_tokens.dart';
 
 /// Neo-Minimal Intelligence — the flagship dashboard, applied to TrustOS.
@@ -125,7 +128,11 @@ class _NeoDashboardScreenState extends State<NeoDashboardScreen> {
                 child: _IconButton(
                   icon: Icons.notifications_none_rounded,
                   badge: true,
-                  onTap: () {},
+                  onTap: () => showModalBottomSheet<void>(
+                    context: context,
+                    showDragHandle: true,
+                    builder: (_) => const _NotificationsSheet(),
+                  ),
                 ),
               ),
             ],
@@ -254,12 +261,18 @@ class _NextActionCard extends StatelessWidget {
             children: [
               Expanded(
                 child: FilledButton(
-                  onPressed: () {},
+                  onPressed: () => showDemoSnack(context,
+                      'Draft ready — review and send to Rohan Mehta',
+                      icon: Icons.edit_outlined),
                   child: const Text('Draft a message'),
                 ),
               ),
               const SizedBox(width: Neo.s12),
-              _TextAction(label: 'Later', onTap: () {}),
+              _TextAction(
+                  label: 'Later',
+                  onTap: () => showDemoSnack(
+                      context, 'Okay — we’ll remind you tomorrow.',
+                      icon: Icons.schedule_outlined)),
             ],
           ),
         ],
@@ -273,18 +286,22 @@ class _QuickActions extends StatelessWidget {
   const _QuickActions();
 
   static const _items = [
-    (Icons.forum_outlined, 'Ask / Offer'),
-    (Icons.card_giftcard_outlined, 'Refer'),
-    (Icons.podcasts_outlined, 'Briefing'),
-    (Icons.card_membership_outlined, 'Invite'),
+    (Icons.forum_outlined, 'Ask / Offer', Routes.board),
+    (Icons.card_giftcard_outlined, 'Refer', Routes.board),
+    (Icons.podcasts_outlined, 'Briefing', Routes.briefing),
+    (Icons.card_membership_outlined, 'Invite', Routes.invites),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        for (final (icon, label) in _items) ...[
-          Expanded(child: _QuickAction(icon: icon, label: label)),
+        for (final (icon, label, route) in _items) ...[
+          Expanded(
+              child: _QuickAction(
+                  icon: icon,
+                  label: label,
+                  onTap: () => context.push(route))),
           if (label != _items.last.$2) const SizedBox(width: Neo.s12),
         ],
       ],
@@ -293,9 +310,11 @@ class _QuickActions extends StatelessWidget {
 }
 
 class _QuickAction extends StatelessWidget {
-  const _QuickAction({required this.icon, required this.label});
+  const _QuickAction(
+      {required this.icon, required this.label, required this.onTap});
   final IconData icon;
   final String label;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +323,7 @@ class _QuickAction extends StatelessWidget {
       borderRadius: BorderRadius.circular(Neo.rMd),
       child: InkWell(
         borderRadius: BorderRadius.circular(Neo.rMd),
-        onTap: () {},
+        onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: Neo.s16),
           decoration: BoxDecoration(
@@ -416,7 +435,9 @@ class _AiRecommendation extends StatelessWidget {
             style: Neo.body,
           ),
           const SizedBox(height: Neo.s12),
-          _TextAction(label: 'See matches →', onTap: () {}),
+          _TextAction(
+              label: 'See matches →',
+              onTap: () => context.push(Routes.board)),
         ],
       ),
     );
@@ -579,11 +600,11 @@ class _NeoBottomNav extends StatelessWidget {
   const _NeoBottomNav();
 
   static const _tabs = [
-    (Icons.grid_view_rounded, 'Home'),
-    (Icons.hub_outlined, 'Network'),
-    (Icons.add_circle_outline, 'Act'),
-    (Icons.groups_outlined, 'Communities'),
-    (Icons.person_outline_rounded, 'You'),
+    (Icons.grid_view_rounded, 'Home', Routes.home),
+    (Icons.hub_outlined, 'Network', Routes.network),
+    (Icons.add_circle_outline, 'Act', Routes.actionHub),
+    (Icons.groups_outlined, 'Communities', Routes.communities),
+    (Icons.person_outline_rounded, 'You', Routes.you),
   ];
 
   @override
@@ -601,24 +622,76 @@ class _NeoBottomNav extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               for (var i = 0; i < _tabs.length; i++)
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(_tabs[i].$1,
-                        size: 24, color: i == 0 ? Neo.accent : Neo.text2),
-                    const SizedBox(height: 3),
-                    Text(_tabs[i].$2,
-                        style: TextStyle(
-                            fontFamily: Neo.family,
-                            fontSize: 11,
-                            fontWeight:
-                                i == 0 ? FontWeight.w600 : FontWeight.w400,
-                            color: i == 0 ? Neo.accent : Neo.text2)),
-                  ],
+                Expanded(
+                  child: InkWell(
+                    // Neo is a preview surface; tapping a tab returns to the
+                    // real app on that tab.
+                    onTap: () => context.go(_tabs[i].$3),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(_tabs[i].$1,
+                            size: 24, color: i == 0 ? Neo.accent : Neo.text2),
+                        const SizedBox(height: 3),
+                        Text(_tabs[i].$2,
+                            style: TextStyle(
+                                fontFamily: Neo.family,
+                                fontSize: 11,
+                                fontWeight: i == 0
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
+                                color: i == 0 ? Neo.accent : Neo.text2)),
+                      ],
+                    ),
+                  ),
                 ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _NotificationsSheet extends StatelessWidget {
+  const _NotificationsSheet();
+
+  static const _items = [
+    (Icons.verified_rounded, Neo.success, 'Referral settled',
+        'Dr. Arvind Shetty · +₹500 released', '2h'),
+    (Icons.handshake_outlined, Neo.accent, 'Priya Sharma vouched for you',
+        'Your trust rose by 2 points', '1d'),
+    (Icons.forum_outlined, Neo.warning, 'Your ask matched',
+        'CFO intro — 2 members can help', '2d'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(Neo.s20, 0, Neo.s20, Neo.s8),
+            child: Text('Notifications', style: Neo.h3),
+          ),
+          for (final (icon, color, title, body, ago) in _items)
+            ListTile(
+              leading: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(Neo.rSm)),
+                child: Icon(icon, size: 18, color: color),
+              ),
+              title: Text(title, style: Neo.bodyStrong),
+              subtitle: Text(body, style: Neo.small),
+              trailing: Text(ago, style: Neo.caption),
+            ),
+          const SizedBox(height: Neo.s8),
+        ],
       ),
     );
   }

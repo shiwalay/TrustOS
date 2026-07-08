@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// Knowledge hub — playbooks, templates, prompts (knowledge-service).
 /// Endorsements, not likes: contribution feeds the knowledge component
@@ -50,7 +51,7 @@ class KnowledgeScreen extends StatelessWidget {
                 title: Text(title),
                 subtitle: Text('$kind · $meta'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
+                onTap: () => showDemoSnack(context, 'Opening “$title”…'),
               ),
             ),
           const SizedBox(height: EmberSpacing.sm),

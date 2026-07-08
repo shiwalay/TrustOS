@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/colors.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// Identity & verification — the T0–T4 ladder (identity-service; PRD §4.1:
 /// every tier unlocks capability, KYC only needed to receive money).
@@ -60,7 +61,11 @@ class IdentityScreen extends StatelessWidget {
                     ? Icon(Icons.check_circle_outline, color: positive)
                     : (tier == 'T2'
                         ? FilledButton(
-                            onPressed: () {},
+                            onPressed: () => showDemoSnack(
+                              context,
+                              'Business verification started — connect GST or your domain.',
+                              icon: Icons.verified_outlined,
+                            ),
                             style: FilledButton.styleFrom(
                               minimumSize: const Size(0, 36),
                               backgroundColor: gold,

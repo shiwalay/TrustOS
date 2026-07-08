@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/colors.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// Relationship timeline — the deep view of one tie (relationship-service).
 /// Demo: Rohan Mehta's timeline; production hydrates per-relationship from
@@ -80,7 +81,11 @@ class RelationshipsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: FilledButton.icon(
-                  onPressed: () {},
+                  onPressed: () => showDemoSnack(
+                    context,
+                    'Draft sent to Rohan Mehta.',
+                    icon: Icons.send_outlined,
+                  ),
                   icon: const Icon(Icons.edit_outlined, size: 18),
                   label: const Text('Send the reconnect draft'),
                 ),

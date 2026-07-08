@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// Communities tab — micro business communities with verified-outcome
 /// receipts front and center (docs/15 §10: guests are converted by
@@ -59,7 +60,8 @@ class CommunitiesScreen extends StatelessWidget {
                 'Bring your BNI chapter, alumni group, or industry circle',
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () => showDemoSnack(context,
+                  'Community setup started — you’ll be the founding host.'),
             ),
           ),
         ],
@@ -101,7 +103,8 @@ class CommunitiesScreen extends StatelessWidget {
                   Icon(Icons.verified_outlined, color: gold, size: 18)
                 else
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () => showDemoSnack(
+                        context, 'Request sent — the host will review it.'),
                     style: OutlinedButton.styleFrom(
                       visualDensity: VisualDensity.compact,
                       side: BorderSide(color: gold.withValues(alpha: 0.6)),

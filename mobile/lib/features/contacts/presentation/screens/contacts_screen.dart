@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/design_system/tokens/colors.dart';
 import '../../../../core/design_system/tokens/spacing.dart';
+import '../../../../core/ui/demo_feedback.dart';
 
 /// Contacts — import sources and hygiene (contact-service). Demo state:
 /// one source connected, dedupe review queue visible.
@@ -28,7 +29,8 @@ class ContactsScreen extends StatelessWidget {
               subtitle:
                   const Text('Connected · 15 imported · synced 2h ago'),
               trailing: TextButton(
-                onPressed: () {},
+                onPressed: () => showDemoSnack(
+                    context, 'Re-syncing your contacts…', icon: Icons.sync),
                 child: const Text('Re-sync'),
               ),
             ),
@@ -40,7 +42,8 @@ class ContactsScreen extends StatelessWidget {
               title: const Text('Google contacts'),
               subtitle: const Text('Connect to enrich titles & companies'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () => showDemoSnack(context,
+                  'Google Contacts connected — enriching titles & companies…'),
             ),
           ),
           const SizedBox(height: EmberSpacing.xs),
@@ -50,7 +53,8 @@ class ContactsScreen extends StatelessWidget {
               title: const Text('CSV / CRM import'),
               subtitle: const Text('HubSpot, Zoho, or a plain export'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () => showDemoSnack(context,
+                  'Import a CSV or CRM export to bring your book in.'),
             ),
           ),
           const SizedBox(height: EmberSpacing.lg),
@@ -70,7 +74,8 @@ class ContactsScreen extends StatelessWidget {
               subtitle: const Text(
                   '"Meera Joshi" ↔ "Meera J (HR)" — review the merge'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () =>
+                  showDemoSnack(context, 'Merged — 1 duplicate resolved.'),
             ),
           ),
           const SizedBox(height: EmberSpacing.md),
