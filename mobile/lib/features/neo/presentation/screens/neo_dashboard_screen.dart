@@ -118,10 +118,15 @@ class _NeoDashboardScreenState extends State<NeoDashboardScreen> {
                   ],
                 ),
               ),
-              _IconButton(
-                icon: Icons.notifications_none_rounded,
-                badge: true,
-                onTap: () {},
+              // A11y: the unread dot is color/shape-only → give it words.
+              Semantics(
+                label: 'Notifications, 1 unread',
+                button: true,
+                child: _IconButton(
+                  icon: Icons.notifications_none_rounded,
+                  badge: true,
+                  onTap: () {},
+                ),
               ),
             ],
           ),
@@ -135,6 +140,16 @@ class _TrustKpiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A11y (audit §2.6): expose one composite label, not four fragments.
+    return Semantics(
+      container: true,
+      label: 'Digital Trust Index, 712 of 1000, Gold band, '
+          'up 8 this month, 138 points to Platinum',
+      child: ExcludeSemantics(child: _card()),
+    );
+  }
+
+  Widget _card() {
     return _NeoCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,14 +168,27 @@ class _TrustKpiCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: Neo.s16),
-          // Minimal linear progress (position toward next band).
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: const LinearProgressIndicator(
-              value: 0.712,
-              minHeight: 6,
-              backgroundColor: Neo.divider,
-              valueColor: AlwaysStoppedAnimation(Neo.accent),
+          // Absolute position on 0–1000, with a tick at the Platinum
+          // threshold (850) so the goal is visual (Goal-Gradient, audit §2.CI).
+          LayoutBuilder(
+            builder: (context, c) => Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(999),
+                  child: const LinearProgressIndicator(
+                    value: 0.712,
+                    minHeight: 6,
+                    backgroundColor: Neo.divider,
+                    valueColor: AlwaysStoppedAnimation(Neo.accent),
+                  ),
+                ),
+                Positioned(
+                  left: c.maxWidth * 0.85 - 1,
+                  child: Container(
+                      width: 2, height: 12, color: Neo.text2),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: Neo.s12),
