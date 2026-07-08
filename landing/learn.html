@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How TrustOS Works — A Visual Field Guide</title>
+<meta name="description" content="Understand TrustOS in eight simple, illustrated steps: trust as an asset, how the Trust Index is built, the referral money flow, the opportunity network, and the daily success loop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens (light default; both themes designed) ───────────── */
+  :root{
+    --navy:#0A1220; --gold:#A98B45; --gold-bright:#C79A4A; --green:#1B7F4D; --amber:#9A6700;
+    --bg:#FAF8F4; --bg-2:#F1EDE5; --card:#FFFFFF; --line:#E4DDCF;
+    --ink:#16202E; --ink-2:#5A6472; --ink-3:#8A93A2;
+    --grid:#E9E2D4; --track:#EDE7DA;
+    --serif:'Playfair Display',Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --gold:#D4B36A; --gold-bright:#E3C77E; --green:#4CC38A; --amber:#E2B93B;
+      --bg:#0A1220; --bg-2:#0C1424; --card:#111B2E; --line:#22304a;
+      --ink:#F3F0E9; --ink-2:#A3ACBC; --ink-3:#6C778A;
+      --grid:#1A2740; --track:#182338;
+    }
+  }
+  :root[data-theme="dark"]{
+    --gold:#D4B36A; --gold-bright:#E3C77E; --green:#4CC38A; --amber:#E2B93B;
+    --bg:#0A1220; --bg-2:#0C1424; --card:#111B2E; --line:#22304a;
+    --ink:#F3F0E9; --ink-2:#A3ACBC; --ink-3:#6C778A;
+    --grid:#1A2740; --track:#182338;
+  }
+  :root[data-theme="light"]{
+    --gold:#A98B45; --gold-bright:#C79A4A; --green:#1B7F4D; --amber:#9A6700;
+    --bg:#FAF8F4; --bg-2:#F1EDE5; --card:#FFFFFF; --line:#E4DDCF;
+    --ink:#16202E; --ink-2:#5A6472; --ink-3:#8A93A2;
+    --grid:#E9E2D4; --track:#EDE7DA;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65;
+       -webkit-font-smoothing:antialiased;transition:background .3s ease,color .3s ease}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  .serif{font-family:var(--serif)}
+  .kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  a{color:var(--gold)}
+
+  /* ── Progress rail ──────────────────────────────────────────── */
+  .railbar{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0;z-index:60;transition:width .1s linear}
+
+  /* ── Nav ────────────────────────────────────────────────────── */
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);
+      backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav .wrap{max-width:1080px;display:flex;align-items:center;justify-content:space-between;height:60px}
+  .wordmark{font-size:12px;letter-spacing:.4em;color:var(--gold);font-weight:600;text-decoration:none}
+  .navr{display:flex;gap:8px;align-items:center}
+  .toggle,.homelink{background:none;border:1px solid var(--line);color:var(--ink-2);cursor:pointer;
+      font-family:var(--sans);font-size:13px;padding:7px 13px;border-radius:2px;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+  .toggle:hover,.homelink:hover{border-color:var(--gold);color:var(--gold)}
+
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .hero{padding:80px 0 56px;text-align:center;border-bottom:1px solid var(--line)}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,6vw,54px);line-height:1.12;
+           text-wrap:balance;margin:18px auto 0;max-width:15em}
+  .hero p{color:var(--ink-2);max-width:32em;margin:20px auto 0;font-size:18px}
+  .hero .meta{margin-top:26px;font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+  .hero .start{display:inline-block;margin-top:30px;background:var(--gold);color:var(--bg);
+       text-decoration:none;font-weight:600;padding:13px 30px;border-radius:2px;font-size:15px}
+
+  /* ── Lessons ────────────────────────────────────────────────── */
+  .lesson{padding:66px 0;border-bottom:1px solid var(--line)}
+  .lesson .num{font-family:var(--serif);font-size:15px;color:var(--gold);font-variant-numeric:tabular-nums;
+       letter-spacing:.1em;display:flex;align-items:center;gap:12px}
+  .lesson .num::after{content:"";flex:1;height:1px;background:var(--line)}
+  .lesson h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,4vw,36px);margin:16px 0 0;
+       text-wrap:balance;max-width:16em}
+  .lesson .lede{color:var(--ink-2);font-size:17px;margin-top:14px;max-width:42em}
+  .lesson .body{color:var(--ink-2);font-size:15.5px;margin-top:14px;max-width:42em}
+  .lesson .body b{color:var(--ink);font-weight:600}
+  .takeaway{margin-top:26px;padding:16px 20px;background:var(--bg-2);border-left:2px solid var(--gold);
+       font-size:15px;max-width:42em;border-radius:0 3px 3px 0}
+  .takeaway b{color:var(--ink);font-weight:600}
+
+  /* chart shell */
+  .fig{margin-top:34px;background:var(--card);border:1px solid var(--line);border-radius:6px;
+       padding:24px 22px 20px}
+  .fig .cap{font-size:12.5px;color:var(--ink-3);margin-top:14px;letter-spacing:.02em}
+  .fig canvas{display:block;width:100%;height:auto}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:2px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .swatch{width:11px;height:11px;border-radius:2px;flex:none}
+
+  /* component bars (lesson 2) */
+  .bands{display:flex;height:34px;border-radius:3px;overflow:hidden;margin-bottom:6px;position:relative}
+  .bands div{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600}
+  .bandmark{position:relative;height:20px;margin-bottom:22px}
+  .bandmark .pin{position:absolute;top:0;transform:translateX(-50%);text-align:center;transition:left 1s cubic-bezier(.22,.8,.3,1)}
+  .bandmark .pin .dot{width:2px;height:12px;background:var(--ink);margin:0 auto}
+  .bandmark .pin .lbl{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .cbar{display:grid;grid-template-columns:170px 1fr 46px;gap:12px;align-items:center;margin:9px 0;font-size:13.5px}
+  .cbar .track{height:10px;background:var(--track);border-radius:5px;overflow:hidden}
+  .cbar .track i{display:block;height:100%;width:0;border-radius:5px;transition:width 1s cubic-bezier(.22,.8,.3,1)}
+  .cbar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+  .cbar .lab{color:var(--ink)}
+
+  /* funnel (lesson 5) */
+  .funnel{display:flex;flex-direction:column;gap:9px}
+  .fstep{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+  .fstep .barwrap{background:var(--track);border-radius:4px;height:44px;position:relative;overflow:hidden}
+  .fstep .bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:14px;
+       color:#fff;font-weight:600;font-size:14px;width:0;transition:width .9s cubic-bezier(.22,.8,.3,1);white-space:nowrap}
+  .fstep .side{font-size:13px;color:var(--ink-2);text-align:right;min-width:96px;font-variant-numeric:tabular-nums}
+  .fstep .side b{color:var(--ink)}
+
+  /* opportunity radial (lesson 6) */
+  .oppnote{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:6px}
+
+  /* daily loop (lesson 7) */
+  .loopgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .loopstep{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:16px 18px;
+       opacity:.55;transition:opacity .3s ease,border-color .3s ease,transform .3s ease}
+  .loopstep.hot{opacity:1;border-color:var(--gold);transform:translateY(-2px)}
+  .loopstep .h{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink);font-size:15px}
+  .loopstep .h .n{width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--bg);
+       display:flex;align-items:center;justify-content:center;font-size:12px;flex:none;font-variant-numeric:tabular-nums}
+  .loopstep p{font-size:13px;color:var(--ink-2);margin-top:8px}
+
+  /* close */
+  .close{padding:78px 0 90px;text-align:center}
+  .close h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4.4vw,42px);text-wrap:balance;max-width:16em;margin:14px auto 0}
+  .close p{color:var(--ink-2);max-width:34em;margin:16px auto 30px;font-size:17px}
+  .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{text-decoration:none;font-weight:600;font-size:15px;padding:13px 28px;border-radius:2px}
+  .btn-gold{background:var(--gold);color:var(--bg)}
+  .btn-ghost{border:1px solid var(--gold);color:var(--gold)}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:13px;color:var(--ink-3);text-align:center}
+
+  @media (max-width:640px){.loopgrid{grid-template-columns:1fr}.cbar{grid-template-columns:120px 1fr 40px}}
+</style>
+</head>
+<body>
+<div class="railbar" id="rail"></div>
+
+<nav>
+  <div class="wrap">
+    <a class="wordmark" href="index.html">T R U S T O S</a>
+    <div class="navr">
+      <button class="toggle" id="themeBtn" aria-label="Toggle theme">◐ Theme</button>
+      <a class="homelink" href="index.html">Home →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">The visual field guide</p>
+    <h1 class="serif">How TrustOS works, in eight simple steps.</h1>
+    <p>No jargon. Each idea gets one plain explanation and one picture. By the end you'll
+       understand exactly how a name in your phone becomes money in your account — and why trust is
+       the thing being measured.</p>
+    <p class="meta">8 lessons · ~6 minute read · charts animate as you scroll</p>
+    <a class="start" href="#l1">Start learning ↓</a>
+  </div>
+</header>
+
+<!-- ── 01 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l1">
+  <div class="wrap">
+    <p class="num">01 · The idea</p>
+    <h2 class="serif">Trust is an asset. Attention is a liability.</h2>
+    <p class="lede">Most apps are built to capture your <b>attention</b> — and attention is spent the
+       moment it's given. TrustOS is built around <b>trust</b>, which does the opposite: it compounds.</p>
+    <p class="body">A viral post spikes and fades within days. A trusted relationship, kept warm, is
+       worth more every year — one warm introduction can close a deal ten cold emails can't. The whole
+       platform is a bet on that second line staying above the first, forever.</p>
+    <div class="fig">
+      <canvas id="c1" height="300" aria-label="Chart comparing attention, which spikes and decays, against trust, which compounds over time"></canvas>
+      <div class="legend">
+        <span><i class="swatch" style="background:var(--ink-3)"></i>Attention — spikes, then decays</span>
+        <span><i class="swatch" style="background:var(--gold)"></i>Trust — compounds</span>
+      </div>
+      <p class="cap">Illustrative. Over 12 months, bursts of attention net almost nothing; trust accrues.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> TrustOS optimises the asset that grows, not the one that evaporates.</div>
+  </div>
+</section>
+
+<!-- ── 02 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l2">
+  <div class="wrap">
+    <p class="num">02 · The measure</p>
+    <h2 class="serif">Your Trust Index: one number, nine honest inputs.</h2>
+    <p class="lede">Every member has a <b>Digital Trust Index</b> from 0 to 1000, sorted into five bands.
+       It is not a vibe — it's a weighted sum of nine verifiable things.</p>
+    <p class="body">The biggest slice is <b>referral performance</b> — did the people you vouched for
+       actually convert? Money-verified signals count most; opinion counts least. Below is exactly how
+       the 1000 points are allocated. Nothing here can be bought.</p>
+    <div class="fig">
+      <div class="bandmark"><div class="pin" id="pin" style="left:0"><div class="lbl" id="pinlbl">712 · Gold</div><div class="dot"></div></div></div>
+      <div class="bands" id="bands">
+        <div style="background:#64748B">Starter</div>
+        <div style="background:#9C6644">Bronze</div>
+        <div style="background:#6E7B8B">Silver</div>
+        <div style="background:var(--gold)">Gold</div>
+        <div style="background:#6D5BD0">Platinum</div>
+      </div>
+      <div id="cbars" style="margin-top:22px"></div>
+      <p class="cap">The nine components and their maximum points (they sum to 1000). Weights are public policy.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> a score you can read line by line — and challenge — not a black box.</div>
+  </div>
+</section>
+
+<!-- ── 03 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l3">
+  <div class="wrap">
+    <p class="num">03 · The mechanism</p>
+    <h2 class="serif">Trust is earned in steps — and quietly lost if you coast.</h2>
+    <p class="lede">Your score is not static. Verified good outcomes push it <b>up</b>; going silent lets it
+       <b>decay</b>. It behaves like fitness, not a certificate.</p>
+    <p class="body">Watch one member across a year: each settled referral and each vouch nudges the line
+       higher, while a two-month quiet spell pulls it back. This is what makes the number mean something —
+       it reflects what you're doing now, not what you did once.</p>
+    <div class="fig">
+      <canvas id="c3" height="300" aria-label="Line chart of a Trust Index rising over twelve months with labelled gains and one decay dip"></canvas>
+      <p class="cap">One member's Trust Index over 12 months. Green markers add; the amber dip is decay from inactivity.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> trust rises with verified action and fades without it — by design.</div>
+  </div>
+</section>
+
+<!-- ── 04 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l4">
+  <div class="wrap">
+    <p class="num">04 · The map</p>
+    <h2 class="serif">Your contacts become a navigable graph.</h2>
+    <p class="lede">When you import contacts, TrustOS maps <b>your</b> relationships — who's close, who's
+       fading, and who can introduce you to whom. Privately: nobody is messaged or profiled.</p>
+    <p class="body">You sit at the centre. Each contact is a node, bigger the stronger the tie. The gold
+       path shows a <b>warm introduction route</b> — the shortest trusted line from you to someone you
+       don't yet know, through a person you both trust. That path is the product.</p>
+    <div class="fig">
+      <canvas id="c4" height="340" aria-label="Network graph with you at the centre, contacts as nodes sized by strength, and a highlighted warm-introduction path"></canvas>
+      <p class="cap">You (centre) → strongest tie → their contact. The brightest edges are your warm-intro paths.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> a relationship you'd forgotten is often the shortest path to your next deal.</div>
+  </div>
+</section>
+
+<!-- ── 05 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l5">
+  <div class="wrap">
+    <p class="num">05 · The money</p>
+    <h2 class="serif">How a referral turns into a payout.</h2>
+    <p class="lede">A referral moves through four verified stages. It only becomes money when the outcome is
+       <b>real</b> — not when it's claimed.</p>
+    <p class="body">A business funds a campaign. You refer someone who fits. When they take the qualifying
+       action, then actually buy, the commission is held in <b>escrow</b> and released after a 14-day
+       no-dispute window — through a double-entry ledger, to your bank. Every stage narrows honestly.</p>
+    <div class="fig">
+      <div class="funnel" id="funnel"></div>
+      <p class="cap">Illustrative funnel for 100 referrals on a ₹500 campaign. Only settled referrals pay — and count toward trust.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> verified-or-nothing. Self-reported numbers move neither money nor your score.</div>
+  </div>
+</section>
+
+<!-- ── 06 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l6">
+  <div class="wrap">
+    <p class="num">06 · The scope</p>
+    <h2 class="serif">Referrals are one of ten opportunities.</h2>
+    <p class="lede">The same trust pipeline that settles a referral can settle nine other kinds of value.
+       That's why TrustOS is an <b>Opportunity Network</b>, not a referral app.</p>
+    <p class="body">Six of these need no money to change hands — they build trust and warm the graph before
+       the paid ones even have liquidity. Four are monetised today. Investment intros deliberately earn
+       trust only, never cash (that's regulated territory).</p>
+    <div class="fig">
+      <canvas id="c6" height="360" aria-label="Radial diagram of a trusted relationship at the centre connecting to ten opportunity types, four marked as monetised"></canvas>
+      <div class="oppnote">
+        <span><i class="swatch" style="background:var(--gold)"></i>Monetised today</span>
+        <span><i class="swatch" style="background:var(--ink-3)"></i>Trust-building (no money needed)</span>
+      </div>
+      <p class="cap">One relationship, ten ways it can create value. The no-money types solve the cold start.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> a trusted relationship is a multi-use asset — referrals are just the obvious one.</div>
+  </div>
+</section>
+
+<!-- ── 07 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l7">
+  <div class="wrap">
+    <p class="num">07 · The daily loop</p>
+    <h2 class="serif">The Daily Success Formula, running for you.</h2>
+    <p class="lede">Great networkers follow one rhythm every day. TrustOS automates the tedious parts of it so
+       you only do the human part — showing up.</p>
+    <p class="body">Seven steps, one loop. Each morning starts warmer than the last, because yesterday's
+       outcomes made the graph smarter. Watch it cycle — this is the engine under the whole product.</p>
+    <div class="fig" style="text-align:center">
+      <canvas id="c7" height="330" aria-label="Circular diagram of seven steps: Learn, Prepare, Prospect, Serve, Follow Up, Improve, Repeat"></canvas>
+      <p class="cap">Learn → Prepare → Prospect → Serve → Follow Up → Improve → Repeat.</p>
+    </div>
+    <div class="loopgrid" id="loopgrid"></div>
+    <div class="takeaway"><b>Takeaway:</b> the discipline is the product — the AI just removes the friction from every step.</div>
+  </div>
+</section>
+
+<!-- ── 08 ─────────────────────────────────────────────── -->
+<section class="lesson" id="l8">
+  <div class="wrap">
+    <p class="num">08 · The gate</p>
+    <h2 class="serif">Why invitation-only — quality beats size.</h2>
+    <p class="lede">An open network grows huge but dilutes: the more strangers you let in, the less any one
+       connection is worth. TrustOS trades size for <b>value per connection</b>.</p>
+    <p class="body">Every member is vouched for, so the average connection is trustworthy. The curve below
+       shows the trade: as a network opens up, its raw size climbs but the value each link carries falls
+       off a cliff. The <b>realised value</b> — size × trust — peaks with a curated, invited network.</p>
+    <div class="fig">
+      <canvas id="c8" height="300" aria-label="Chart showing network size rising with openness while value per connection falls, and realised value peaking at a curated network"></canvas>
+      <div class="legend">
+        <span><i class="swatch" style="background:var(--ink-3)"></i>Network size</span>
+        <span><i class="swatch" style="background:var(--amber)"></i>Value per connection</span>
+        <span><i class="swatch" style="background:var(--gold)"></i>Realised value (size × trust)</span>
+      </div>
+      <p class="cap">Realised value peaks where the network is invited and curated — not where it's largest.</p>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> the invitation isn't exclusivity for its own sake — it's what keeps every referral worth money.</div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <p class="kicker">You've got it</p>
+    <h2 class="serif">That's the whole machine. Trusted intro in, verified value out.</h2>
+    <p>Trust you can explain, a graph that finds opportunities, and a ledger that settles them — running
+       on one daily loop.</p>
+    <div class="ctas">
+      <a class="btn btn-gold" href="index.html#join">Request an invitation</a>
+      <a class="btn btn-ghost" href="index.html#video">Watch the 30-second version</a>
+    </div>
+  </div>
+</section>
+
+<footer>TrustOS · The operating system for trusted business relationships. Figures on this page are illustrative.</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function cv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+
+  /* progress rail */
+  var rail=document.getElementById('rail');
+  addEventListener('scroll',function(){
+    var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    rail.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+  },{passive:true});
+
+  /* theme toggle */
+  var root=document.documentElement, tbtn=document.getElementById('themeBtn');
+  tbtn.addEventListener('click',function(){
+    root.setAttribute('data-theme', root.getAttribute('data-theme')==='dark'?'light':'dark');
+    redrawAll();
+  });
+
+  /* ── canvas helper ── */
+  function fit(cv2){
+    // Capture the logical height ONCE — assigning canvas.height mutates the
+    // height attribute, so re-reading it each frame would compound by dpr.
+    if(!cv2.dataset.h) cv2.dataset.h=(cv2.getAttribute('height')|0);
+    var lh=cv2.dataset.h|0, dpr=Math.min(devicePixelRatio||1,2), r=cv2.getBoundingClientRect();
+    cv2.width=r.width*dpr; cv2.height=lh*dpr; cv2.style.height=lh+'px';
+    var ctx=cv2.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+    return {ctx:ctx,w:r.width,h:lh};
+  }
+  function animate(dur,step){
+    if(reduce){step(1);return;}
+    var t0=null;
+    function fr(ts){ if(t0===null)t0=ts; var p=Math.min(1,(ts-t0)/dur);
+      step(p<1?1-Math.pow(1-p,3):1); if(p<1)requestAnimationFrame(fr);}
+    requestAnimationFrame(fr);
+  }
+
+  /* registry: draw when scrolled into view; redraw on theme change */
+  var figs=[];
+  function reg(el,drawStatic,drawAnim){figs.push({el:el,drawStatic:drawStatic,drawAnim:drawAnim,done:false});}
+  function redrawAll(){figs.forEach(function(f){if(f.done)f.drawStatic();});}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(!e.isIntersecting)return;
+      var f=figs.find(function(x){return x.el===e.target;});
+      if(f&&!f.done){f.done=true; f.drawAnim?f.drawAnim():f.drawStatic();}
+    });
+  },{threshold:.3});
+
+  /* ── L1: attention vs trust ── */
+  (function(){
+    var el=document.getElementById('c1');
+    function draw(k){
+      var d=fit(el),ctx=d.ctx,w=d.w,h=d.h,pad=30,x0=pad,x1=w-pad,y0=h-26,y1=16;
+      ctx.clearRect(0,0,w,h);
+      var N=120;
+      ctx.strokeStyle=cv('--grid');ctx.lineWidth=1;
+      for(var g=0;g<=4;g++){var yy=y1+(y0-y1)*g/4;ctx.beginPath();ctx.moveTo(x0,yy);ctx.lineTo(x1,yy);ctx.stroke();}
+      function X(i){return x0+(x1-x0)*i/(N-1);}
+      function Y(v){return y0-(y0-y1)*v;}
+      // attention: sum of decaying pulses, net low
+      function att(i){var t=i/(N-1)*12,s=0;[1,3.2,5,7.5,9.8].forEach(function(c){s+=Math.exp(-Math.pow((t-c)/0.5,2))*0.72;});return Math.min(0.95,s*0.5+0.04);}
+      // trust: compounding
+      function tru(i){var t=i/(N-1);return 0.04+0.9*(1-Math.exp(-2.4*t))* (0.7+0.3*t);}
+      var kk=Math.round(k*(N-1));
+      // trust area
+      var grd=ctx.createLinearGradient(0,y1,0,y0);grd.addColorStop(0,cv('--gold')+'44');grd.addColorStop(1,cv('--gold')+'00');
+      ctx.beginPath();ctx.moveTo(X(0),Y(tru(0)));
+      for(var i=1;i<=kk;i++)ctx.lineTo(X(i),Y(tru(i)));
+      ctx.lineTo(X(kk),y0);ctx.lineTo(X(0),y0);ctx.closePath();ctx.fillStyle=grd;ctx.fill();
+      // attention line
+      ctx.beginPath();ctx.strokeStyle=cv('--ink-3');ctx.lineWidth=2;
+      for(i=0;i<=kk;i++){var xa=X(i),ya=Y(att(i));i===0?ctx.moveTo(xa,ya):ctx.lineTo(xa,ya);}ctx.stroke();
+      // trust line
+      ctx.beginPath();ctx.strokeStyle=cv('--gold');ctx.lineWidth=2.6;
+      for(i=0;i<=kk;i++){var xt=X(i),yt=Y(tru(i));i===0?ctx.moveTo(xt,yt):ctx.lineTo(xt,yt);}ctx.stroke();
+      ctx.fillStyle=cv('--gold');ctx.beginPath();ctx.arc(X(kk),Y(tru(kk)),4,0,7);ctx.fill();
+      ctx.fillStyle=cv('--ink-3');ctx.font='11px '+cv('--sans');ctx.textAlign='left';
+      ctx.fillText('month 0',x0,h-8);ctx.textAlign='right';ctx.fillText('month 12',x1,h-8);
+    }
+    reg(el,function(){draw(1);},function(){animate(1100,draw);});
+    io.observe(el);
+  })();
+
+  /* ── L2: band pin + component bars ── */
+  (function(){
+    var comps=[['Referral performance',200],['Identity & verification',150],['Transactions & deals',150],
+      ['Relationship quality',150],['Community contribution',100],['Consistency & longevity',100],
+      ['Knowledge contribution',50],['Peer vouches',50],['AI confidence',50]];
+    var host=document.getElementById('cbars');
+    comps.forEach(function(c){
+      var row=document.createElement('div');row.className='cbar';
+      row.innerHTML='<div class="lab">'+c[0]+'</div><div class="track"><i data-w="'+(c[1]/200*100)+'"></i></div><div class="v">'+c[1]+'</div>';
+      host.appendChild(row);
+    });
+    var el=document.getElementById('l2');
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
+      document.getElementById('pin').style.left='71.2%';
+      document.querySelectorAll('#cbars .track i').forEach(function(i){i.style.background=cv('--gold');i.style.width=i.getAttribute('data-w')+'%';});
+      io2.disconnect();});},{threshold:.3});
+    io2.observe(el);
+  })();
+
+  /* ── L3: trust over 12 months ── */
+  (function(){
+    var el=document.getElementById('c3');
+    var pts=[520,540,560,555,585,610,600,640,668,690,700,712];
+    var events=[{i:4,t:'+ referral',up:1},{i:6,t:'− decay',up:0},{i:8,t:'+ vouch',up:1},{i:11,t:'+ settled',up:1}];
+    function draw(k){
+      var d=fit(el),ctx=d.ctx,w=d.w,h=d.h,pad=34,x0=pad,x1=w-14,y0=h-26,y1=18,lo=480,hi=760;
+      ctx.clearRect(0,0,w,h);
+      ctx.strokeStyle=cv('--grid');ctx.lineWidth=1;ctx.fillStyle=cv('--ink-3');ctx.font='10px '+cv('--sans');ctx.textAlign='right';
+      for(var g=0;g<=4;g++){var val=lo+(hi-lo)*g/4,yy=y0-(y0-y1)*g/4;ctx.beginPath();ctx.moveTo(x0,yy);ctx.lineTo(x1,yy);ctx.stroke();ctx.fillText(Math.round(val),x0-6,yy+3);}
+      function X(i){return x0+(x1-x0)*i/(pts.length-1);}
+      function Y(v){return y0-(y0-y1)*(v-lo)/(hi-lo);}
+      var kk=Math.max(1,Math.round(k*(pts.length-1)));
+      var grd=ctx.createLinearGradient(0,y1,0,y0);grd.addColorStop(0,cv('--gold')+'3a');grd.addColorStop(1,cv('--gold')+'00');
+      ctx.beginPath();ctx.moveTo(X(0),Y(pts[0]));for(var i=1;i<=kk;i++)ctx.lineTo(X(i),Y(pts[i]));
+      ctx.lineTo(X(kk),y0);ctx.lineTo(X(0),y0);ctx.closePath();ctx.fillStyle=grd;ctx.fill();
+      ctx.beginPath();ctx.strokeStyle=cv('--gold');ctx.lineWidth=2.6;
+      for(i=0;i<=kk;i++){i===0?ctx.moveTo(X(i),Y(pts[i])):ctx.lineTo(X(i),Y(pts[i]));}ctx.stroke();
+      events.forEach(function(ev){ if(ev.i>kk)return;
+        var col=ev.up?cv('--green'):cv('--amber');
+        ctx.fillStyle=col;ctx.beginPath();ctx.arc(X(ev.i),Y(pts[ev.i]),4.5,0,7);ctx.fill();
+        ctx.fillStyle=col;ctx.font='10px '+cv('--sans');ctx.textAlign='center';ctx.fillText(ev.t,X(ev.i),Y(pts[ev.i])-10);
+      });
+      ctx.fillStyle=cv('--ink');ctx.font='600 12px '+cv('--sans');ctx.textAlign='center';
+      ctx.fillText(pts[kk],X(kk),Y(pts[kk])-14);
+    }
+    reg(el,function(){draw(1);},function(){animate(1300,draw);});io.observe(el);
+  })();
+
+  /* ── L4: relationship graph ── */
+  (function(){
+    var el=document.getElementById('c4');
+    var nodes=[[92,-90],[84,-38],[78,20],[71,70],[66,120],[58,165],[52,205],[47,250],[41,300]];
+    function draw(k){
+      var d=fit(el),ctx=d.ctx,w=d.w,h=d.h,cx=w/2,cy=h/2,R=Math.min(w,h)*0.34;
+      ctx.clearRect(0,0,w,h);
+      nodes.forEach(function(nd,idx){
+        var ang=(nd[1])*Math.PI/180, dist=R*(1.15-(nd[0]/120)*0.5);
+        var x=cx+Math.cos(ang)*dist, y=cy+Math.sin(ang)*dist, kk=Math.min(1,k*1.2 - idx*0.05);
+        if(kk<=0)return;
+        var warm=idx===0;
+        ctx.strokeStyle=(warm?cv('--gold'):cv('--gold')+ (60+Math.round(nd[0]))+'');
+        ctx.globalAlpha=warm?1:(0.25+nd[0]/200);ctx.lineWidth=warm?2.6:1.3;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+(x-cx)*kk,cy+(y-cy)*kk);ctx.stroke();ctx.globalAlpha=1;
+        if(kk>=1){
+          ctx.fillStyle=warm?cv('--gold'):cv('--gold-bright');
+          ctx.beginPath();ctx.arc(x,y,4+nd[0]/22,0,7);ctx.fill();
+          if(warm){ // second-degree target through strongest tie
+            var tx=x+Math.cos(ang-0.5)*R*0.9, ty=y+Math.sin(ang-0.5)*R*0.9;
+            ctx.strokeStyle=cv('--gold');ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(tx,ty);ctx.stroke();
+            ctx.fillStyle=cv('--gold');ctx.beginPath();ctx.arc(tx,ty,6,0,7);ctx.fill();
+            ctx.fillStyle=cv('--ink-2');ctx.font='10px '+cv('--sans');ctx.textAlign='center';ctx.fillText('a new prospect',tx,ty-11);
+          }
+        }
+      });
+      ctx.fillStyle=cv('--gold');ctx.beginPath();ctx.arc(cx,cy,14,0,7);ctx.fill();
+      ctx.fillStyle=cv('--bg');ctx.font='600 11px '+cv('--sans');ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('You',cx,cy);ctx.textBaseline='alphabetic';
+    }
+    reg(el,function(){draw(1);},function(){animate(1400,draw);});io.observe(el);
+  })();
+
+  /* ── L5: funnel ── */
+  (function(){
+    var stages=[['Submitted',100,'100 referrals','var(--ink-3)'],
+      ['Qualified',64,'64 · demo attended','var(--amber)'],
+      ['Converted',38,'38 · invoice paid','var(--gold-bright)'],
+      ['Settled',36,'36 · ₹18,000 paid out','var(--green)']];
+    var host=document.getElementById('funnel');
+    stages.forEach(function(s){
+      var row=document.createElement('div');row.className='fstep';
+      row.innerHTML='<div class="barwrap"><div class="bar" data-w="'+s[1]+'" style="background:'+s[3]+'">'+s[0]+'</div></div><div class="side"><b>'+s[2].split(' · ')[0]+'</b><br>'+(s[2].split(' · ')[1]||'')+'</div>';
+      host.appendChild(row);
+    });
+    var io5=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
+      host.querySelectorAll('.bar').forEach(function(b){b.style.width=b.getAttribute('data-w')+'%';});io5.disconnect();});},{threshold:.35});
+    io5.observe(host);
+  })();
+
+  /* ── L6: opportunity radial ── */
+  (function(){
+    var el=document.getElementById('c6');
+    var types=[['Referral',1],['Consulting',1],['Hiring',1],['Vendor match',1],
+      ['Partnership',0],['Mentorship',0],['Speaking',0],['Collaboration',0],
+      ['Community invite',0],['Investment · trust only',0]];
+    function draw(k){
+      var d=fit(el),ctx=d.ctx,w=d.w,h=d.h,cx=w/2,cy=h/2,R=Math.min(w,h)*0.36;
+      ctx.clearRect(0,0,w,h);
+      types.forEach(function(t,i){
+        var ang=-Math.PI/2+i*2*Math.PI/types.length, kk=Math.min(1,k*1.3-i*0.05);if(kk<=0)return;
+        var x=cx+Math.cos(ang)*R, y=cy+Math.sin(ang)*R, gold=t[1]===1;
+        ctx.strokeStyle=gold?cv('--gold'):cv('--ink-3');ctx.globalAlpha=gold?0.9:0.4;ctx.lineWidth=gold?2:1.2;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+(x-cx)*kk,cy+(y-cy)*kk);ctx.stroke();ctx.globalAlpha=1;
+        if(kk>=1){
+          ctx.fillStyle=gold?cv('--gold'):cv('--card');ctx.strokeStyle=gold?cv('--gold'):cv('--ink-3');ctx.lineWidth=1.4;
+          ctx.beginPath();ctx.arc(x,y,5.5,0,7);ctx.fill();if(!gold)ctx.stroke();
+          ctx.fillStyle=gold?cv('--ink'):cv('--ink-2');ctx.font=(gold?'600 ':'')+'11px '+cv('--sans');
+          var right=Math.cos(ang)>0.15,left=Math.cos(ang)<-0.15;
+          ctx.textAlign=right?'left':left?'right':'center';
+          ctx.fillText(t[0], x+(right?10:left?-10:0), y+(Math.abs(Math.cos(ang))<0.15?(Math.sin(ang)>0?16:-9):3));
+        }
+      });
+      ctx.fillStyle=cv('--gold');ctx.beginPath();ctx.arc(cx,cy,20,0,7);ctx.fill();
+      ctx.fillStyle=cv('--bg');ctx.font='600 10px '+cv('--sans');ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('Trusted',cx,cy-5);ctx.fillText('relationship',cx,cy+7);ctx.textBaseline='alphabetic';
+    }
+    reg(el,function(){draw(1);},function(){animate(1300,draw);});io.observe(el);
+  })();
+
+  /* ── L7: daily loop ── */
+  (function(){
+    var steps=[['Learn','Your morning digest surfaces one thing that matters about your network.'],
+      ['Prepare','The AI drafts the intro and sets up the outreach — you just review it.'],
+      ['Prospect','It finds who you should meet and which campaigns your contacts fit.'],
+      ['Serve','You make the introduction, answer the ask, or pass the referral.'],
+      ['Follow Up','Automations close every loop — meetings, thank-yous, reminders. Nothing drops.'],
+      ['Improve','Each verified outcome lifts your Trust Index and sharpens tomorrow’s matches.'],
+      ['Repeat','The next day starts warmer, because the graph learned from today.']];
+    var host=document.getElementById('loopgrid');
+    steps.forEach(function(s,i){
+      var c=document.createElement('div');c.className='loopstep';c.id='ls'+i;
+      c.innerHTML='<div class="h"><span class="n">'+(i+1)+'</span>'+s[0]+'</div><p>'+s[1]+'</p>';
+      host.appendChild(c);
+    });
+    var el=document.getElementById('c7'),hot=-1,timer=null;
+    function draw(k){
+      var d=fit(el),ctx=d.ctx,w=d.w,h=d.h,cx=w/2,cy=h/2,R=Math.min(w,h)*0.36;
+      ctx.clearRect(0,0,w,h);
+      var n=steps.length;
+      // ring
+      ctx.strokeStyle=cv('--line');ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();
+      for(var i=0;i<n;i++){
+        var a=-Math.PI/2+i*2*Math.PI/n, x=cx+Math.cos(a)*R, y=cy+Math.sin(a)*R, on=(i===hot);
+        // arrow to next along the circle
+        var a2=-Math.PI/2+(i+1)*2*Math.PI/n;
+        ctx.strokeStyle=cv('--gold');ctx.globalAlpha=on?1:0.35;ctx.lineWidth=on?3:2;
+        ctx.beginPath();ctx.arc(cx,cy,R,a+0.28,a2-0.28);ctx.stroke();ctx.globalAlpha=1;
+        ctx.fillStyle=on?cv('--gold'):cv('--card');ctx.strokeStyle=cv('--gold');ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(x,y,on?17:13,0,7);ctx.fill();ctx.stroke();
+        ctx.fillStyle=on?cv('--bg'):cv('--gold');ctx.font='600 12px '+cv('--sans');ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(i+1,x,y);ctx.textBaseline='alphabetic';
+        ctx.fillStyle=on?cv('--ink'):cv('--ink-2');ctx.font=(on?'600 ':'')+'11px '+cv('--sans');
+        var lr=Math.cos(a);ctx.textAlign=lr>0.2?'left':lr<-0.2?'right':'center';
+        ctx.fillText(steps[i][0], x+Math.cos(a)*26, y+Math.sin(a)*24+3);
+      }
+      ctx.fillStyle=cv('--gold');ctx.font='600 12px '+cv('--sans');ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('Daily',cx,cy-8);ctx.fillText('Success',cx,cy+6);ctx.textBaseline='alphabetic';
+    }
+    function cycle(){hot=(hot+1)%steps.length;draw(1);
+      document.querySelectorAll('.loopstep').forEach(function(s,i){s.classList.toggle('hot',i===hot);});}
+    reg(el,function(){draw(1);},function(){draw(1);if(!reduce){cycle();timer=setInterval(cycle,1600);}});
+    io.observe(el);
+  })();
+
+  /* ── L8: openness vs value ── */
+  (function(){
+    var el=document.getElementById('c8');
+    function draw(k){
+      var d=fit(el),ctx=d.ctx,w=d.w,h=d.h,pad=32,x0=pad,x1=w-14,y0=h-28,y1=16,N=100;
+      ctx.clearRect(0,0,w,h);
+      ctx.strokeStyle=cv('--grid');ctx.lineWidth=1;
+      for(var g=0;g<=4;g++){var yy=y1+(y0-y1)*g/4;ctx.beginPath();ctx.moveTo(x0,yy);ctx.lineTo(x1,yy);ctx.stroke();}
+      function X(i){return x0+(x1-x0)*i/(N-1);}
+      function Y(v){return y0-(y0-y1)*v;}
+      function size(t){return 0.06+0.9*t;}                 // rises with openness
+      function vpc(t){return 0.96*Math.exp(-3.1*t)+0.04;}  // falls fast
+      function realised(t){return size(t)*vpc(t)*2.1;}     // peaks early
+      var kk=Math.round(k*(N-1));
+      function line(fn,col,wd){ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=wd;
+        for(var i=0;i<=kk;i++){var t=i/(N-1);i===0?ctx.moveTo(X(i),Y(fn(t))):ctx.lineTo(X(i),Y(fn(t)));}ctx.stroke();}
+      line(size,cv('--ink-3'),2);
+      line(vpc,cv('--amber'),2);
+      // realised area
+      var grd=ctx.createLinearGradient(0,y1,0,y0);grd.addColorStop(0,cv('--gold')+'33');grd.addColorStop(1,cv('--gold')+'00');
+      ctx.beginPath();ctx.moveTo(X(0),Y(realised(0)));for(i=1;i<=kk;i++)ctx.lineTo(X(i),Y(realised(i/(N-1))));
+      ctx.lineTo(X(kk),y0);ctx.lineTo(X(0),y0);ctx.closePath();ctx.fillStyle=grd;ctx.fill();
+      line(realised,cv('--gold'),2.8);
+      // peak marker
+      if(k>=1){
+        var best=0,bt=0;for(i=0;i<N;i++){var t=i/(N-1),r=realised(t);if(r>best){best=r;bt=t;}}
+        var px=X(Math.round(bt*(N-1))),py=Y(best);
+        ctx.setLineDash([3,3]);ctx.strokeStyle=cv('--gold');ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,y0);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=cv('--gold');ctx.beginPath();ctx.arc(px,py,4.5,0,7);ctx.fill();
+        ctx.font='600 11px '+cv('--sans');ctx.textAlign='center';ctx.fillText('invitation-only',px,py-10);
+      }
+      ctx.fillStyle=cv('--ink-3');ctx.font='11px '+cv('--sans');ctx.textAlign='left';ctx.fillText('curated',x0,h-8);
+      ctx.textAlign='right';ctx.fillText('wide open',x1,h-8);
+    }
+    reg(el,function(){draw(1);},function(){animate(1300,draw);});io.observe(el);
+  })();
+})();
+</script>
+</body>
+</html>
