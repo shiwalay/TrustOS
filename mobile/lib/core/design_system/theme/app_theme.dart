@@ -133,7 +133,10 @@ abstract final class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: _accent,
-          minimumSize: const Size.fromHeight(48),
+          // Height for the 48pt touch target; width hugs content so inline
+          // outlined buttons don't starve their row neighbours.
+          // (Size.fromHeight sets infinite width — deliberately avoided.)
+          minimumSize: const Size(0, 48),
           side: const BorderSide(color: _divider),
           textStyle: EmberTypography.body.copyWith(fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(
