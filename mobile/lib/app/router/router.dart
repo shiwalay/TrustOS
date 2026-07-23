@@ -6,6 +6,7 @@ import '../../features/board/presentation/screens/board_screen.dart';
 import '../../features/briefing/presentation/screens/briefing_screen.dart';
 import '../../features/campaigns/presentation/screens/campaigns_screen.dart';
 import '../../features/communities/presentation/screens/communities_screen.dart';
+import '../../features/connectors/presentation/screens/connectors_screen.dart';
 import '../../features/contacts/presentation/screens/contacts_screen.dart';
 import '../../features/copilot/presentation/screens/copilot_screen.dart';
 import '../../features/deals/presentation/screens/deals_screen.dart';
@@ -168,6 +169,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.board,
         builder: (context, state) => const BoardScreen(),
+      ),
+      GoRoute(
+        path: Routes.connectors,
+        builder: (context, state) => const ConnectorsScreen(),
       ),
       GoRoute(
         path: Routes.neo,

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "trustos-web",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-I", "-c", "import os; os.chdir('/private/tmp/claude-501/-Users-swap-Desktop-drsandya/8c6f050c-d030-4f2b-9094-b2285e8515f2/scratchpad/trustos-web'); from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler; ThreadingHTTPServer(('127.0.0.1', 8090), SimpleHTTPRequestHandler).serve_forever()"],
+      "port": 8090
+    }
+  ]
+}

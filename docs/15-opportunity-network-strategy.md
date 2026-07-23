@@ -186,6 +186,22 @@ Every opportunity in §7 starts as a signal. The **Ask & Offer board** is where 
 
 This is the async, continuous version of the BNI meeting's "asks & offers" round — and the relay mechanic is the trust graph doing what it exists to do: warm-route an opportunity to the person who can actually close it.
 
+### 7.3 The Trusted Connector (⊕ Stage-2 positioning: certainty, not introductions)
+
+> People don't pay for introductions — they pay for **certainty**. The goal every member is climbing toward: to be *the* person you call for one specific problem. "Need a factory?" → call them. "Need investors?" → call them. "Need influencers?" → call them.
+
+The referral marketplace makes intros *possible*; the **Trusted Connector** layer makes a member *known* for a problem, and routes that problem to them automatically.
+
+- **Earned, never claimed.** You don't self-declare "I'm the factory guy." You *become* a **Verified Connector · Manufacturing** by accumulating verified outcomes in that domain — e.g., ≥ 3 *settled* factory intros with a healthy land-rate. The badge is backed by the ledger, so it signals certainty, not marketing. Weakly-supported claims get a provisional ("Emerging connector"), not the verified mark.
+- **A per-domain connector score.** Distinct from the overall DTI: for each expertise cluster a member has a connector score = f(verified intros in-domain, land-rate [Wilson-smoothed], recency, value facilitated, reciprocity). It's the referral/opportunity component (06 §1) sliced by domain from the expertise graph (Neo4j `:HAS_SKILL` + settled `:INTRODUCED` edges), so it's already computable from data the platform holds.
+- **Problem-first discovery.** Members (and, later, non-member searchers) look up *problems*, not people: "who can get me a factory in the west zone?" → the platform surfaces the top Verified Connector(s) for `Manufacturing` within trust range (your network → your communities → your city), each shown with proof (N verified intros · X% land-rate · ₹ facilitated · band). This is the "Call you" mechanic made real.
+- **Automatic routing.** An Ask (§7.2) tagged to a domain is routed first to that domain's trusted connectors (highest connector score, sufficient capacity), before broadening. The connector's inbound burden is capacity-managed (06 §4 anti-flood) so being the go-to person is an asset, not a punishment.
+- **The member's own path.** Every member sees their **connector standing**: the domains where they're verified, and the ones they're *close* to earning ("2 more settled clinic intros → Verified Connector · Healthcare" — Goal-Gradient). This turns Stage-2 from a slogan into a visible ladder: pick one problem, close a few, own it.
+- **Anti-gaming.** Only settled, two-party-verified intros count; land-rate uses Wilson lower bound (a 2/2 fluke can't outrank a 9/11 track record); collusion damping and domain-fraud detection apply (06 §1/§3). Buying or faking connector status is a bannable trust-manipulation offense (18 §2).
+- ⊕ Data: `connector_domains(user_id, domain, connector_score, verified_intros, land_rate, value_facilitated_minor, status[emerging|verified])`. ⊕ Events: `connector.status.earned.v1`, `connector.intro.requested.v1`. Owned by networking-service (expertise + routing) over the trust/deal ledgers.
+
+Strategically this is the moat compounding: a verified factory-connector's status *is* their deal flow, and it can only be built by actually connecting people — which produces the verified-outcome data no competitor has (the AI Learning Loop, §12). It's also the cleanest monetization surface: certainty is what businesses will pay a premium (and a marketplace take-rate) to reach.
+
 ## 8. System Architecture & AI Enhancements (delta view)
 
 No new services; four grow (all within [`02-system-architecture.md`](02-system-architecture.md) patterns):

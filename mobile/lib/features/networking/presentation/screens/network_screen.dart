@@ -48,6 +48,18 @@ class NetworkScreen extends ConsumerWidget {
                   onTap: () => context.push(Routes.board),
                 ),
               ),
+              const SizedBox(height: EmberSpacing.xs),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.hub_outlined,
+                      color: theme.colorScheme.tertiary),
+                  title: const Text('Trusted Connectors'),
+                  subtitle: const Text(
+                      'The person to call for every problem — or become one'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Routes.connectors),
+                ),
+              ),
               const SizedBox(height: EmberSpacing.md),
               for (final c in rows) _RelationshipTile(contact: c),
             ],
