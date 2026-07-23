@@ -31,6 +31,7 @@ Start with [`docs/00-overview.md`](docs/00-overview.md) (executive synthesis), t
 | [`18-daily-call-enforcement-awards.md`](docs/18-daily-call-enforcement-awards.md) | Daily briefing calls, 3-strike enforcement, weekly awards: implementation design | features |
 | [`19-neo-minimal-design-system.md`](docs/19-neo-minimal-design-system.md) | Neo-Minimal Intelligence design language: tokens, component library, per-screen specs; live proof at route /neo | design |
 | [`20-usability-audit.md`](docs/20-usability-audit.md) | Measurable UX audit: per-screen scorecards, principle citations, thumb-zone analysis, accessibility checklist, fix backlog, metrics | design |
+| [`21-production-readiness.md`](docs/21-production-readiness.md) | Production-readiness gap analysis + critical path, backend/mobile/integration work, full test pyramid (integration/contract/E2E), sequencing & sizing | ops |
 
 *(Deliverable numbers refer to the 35 items in the source brief; user journeys and IA appear in 01 and 10, sequence diagrams in 04, infrastructure diagrams in 02 and 12.)*
 
